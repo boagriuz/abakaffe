@@ -8,7 +8,7 @@ Abakaffe project - NTNU - Design of Reactive Systems 1 - TTM4115
 In prompt: <br/>
     1. Assuming you have pip installed; ```pip install virtualenv virtualenvwrapper``` <br/>
     2. ```cd``` into a directory you want to download the repo <br/>
-    3. type ```git pull https://github.com/boagriuz/abakaffe.git``` <br/>
+    3. type ```git clone https://github.com/boagriuz/abakaffe.git``` <br/>
     4. type ```mkvirtualenv abakaffe``` or ```virtualenv abakaffe``` <br/>
     5. ```cd``` into abakaffe and type; ```pip install -r requirements.txt``` <br/>
     7. type ```python ./manage.py runserver 8080``` <br/>
