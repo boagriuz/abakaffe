@@ -10,7 +10,7 @@ In prompt: <br/>
     2. ```cd``` into a directory you want to download the repo <br/>
     3. type ```git clone https://github.com/boagriuz/abakaffe.git``` <br/>
     4. type ```mkvirtualenv Env``` or ```virtualenv Env``` <br/>
-    6. type ```workon Env``` or ```Env\Scripts\activate```
+    6. type ```workon Env``` or ```Env\Scripts\activate``` <br/>
     7. ```cd``` into abakaffe and type; ```pip install -r requirements.txt``` <br/>
     8. type ```python ./manage.py runserver 8080``` <br/>
     9. a local test server should start <br/>
