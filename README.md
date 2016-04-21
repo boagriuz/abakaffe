@@ -10,7 +10,7 @@ In prompt: <br/>
     2. ```cd``` into a directory you want to download the repo <br/>
     3. type ```git pull https://github.com/boagriuz/abakaffe.git``` <br/>
     4. ```cd``` into abakaffe and type; ```pip install -r requirements.txt``` <br/>
-    5. type ```mkvirtuelenv abakaffe``` or ```virtualenv abakaffe``` <br/>
+    5. type ```mkvirtualenv abakaffe``` or ```virtualenv abakaffe``` <br/>
     6. ```cd``` into the abakaffe django project, where manage.py is located <br/>
     7. type ```python ./manage.py runserver 8080``` <br/>
     8. a local test server should start <br/>
