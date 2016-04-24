@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import datetime
 import json
-from models import CoffeeBrewer
+from .models import CoffeeBrewer
 
 
 
