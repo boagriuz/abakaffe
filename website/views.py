@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 import datetime
 import json
 from .models import CoffeeBrewer
@@ -7,26 +8,36 @@ from .models import CoffeeBrewer
 
 
 
-# Create your views here.
+
+@csrf_exempt
 def brewer_post(request):
-	if request.method == 'POST':
-		add_brewer(request.data)
-	elif request.method == 'GET':
-		#Fetching RFID from request
-		s = request.META['QUERY_STRING']
-		return checkRFID(s)
-
-	#return HttpResponse("mjau")
-
-def checkRFID(ID):
-	entry = CoffeeBrewer.objects.filter(RFID = ID)
 	response = HttpResponse()
-	if entry.exists():
-		response.content = True
-	else:
-		response.content = False
+	if request.method == 'POST':
+		ID = request.POST.get('RFID')
+		#Check if card is already registered
+		s = RFID_in_DB(ID)
+		print s
+		if not s:
+			add_brewer(request.POST)
+			print("Added user to DB")
+		else:
+			print("User already in DB")
+		return HttpResponse()
+
+
+	elif request.method == 'GET':
+		ID = request.META['QUERY_STRING']
+		#Fetching RFID from request
+		response.content = RFID_in_DB(ID)
 	return response
 
+
+def RFID_in_DB(ID):
+	entry = CoffeeBrewer.objects.filter(RFID = ID)
+	return entry.exists()
+	
+
+
 def add_brewer(data):
-	brewer = CoffeeBrewer(datetime = datetime.now(), RFID = data['RFID'], name = data['name'])
+	brewer = CoffeeBrewer(datetime = datetime.datetime.now(), RFID = data.get('RFID'), name = data.get('name'))
 	brewer.save()
