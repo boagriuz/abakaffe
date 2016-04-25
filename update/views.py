@@ -34,7 +34,7 @@ def brewer_post(request):
 	
 		#Checking if RFID already in database
 		response.content = RFID_in_DB(rfid)
-		if response.content:
+		if RFID_in_DB(rfid):
 			entry = CoffeeBrewer.objects.get(RFID = rfid)
 			entry.brews += 1
 			print(entry.brews)
