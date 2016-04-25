@@ -33,15 +33,21 @@ def brewer_post(request):
 		#Fetching RFID from request
 		response.content = RFID_in_DB(ID)
 		if response.content:
-			entry = CoffeeBrewer.objects.get(RFID = ID)
-			entry.brews += 1
-			print(entry.brews)
-			entry.save()
+			#entry = CoffeeBrewer.objects.get(RFID = ID)
+			#entry.brews += 1
+			add_brew(ID)
+			#print(entry.brews)
+			#entry.save()
 	return response
 
 def RFID_in_DB(ID):
 	entry = CoffeeBrewer.objects.filter(RFID = ID)
 	return entry.exists()
+
+
+def add_brew(RFID):
+	brew = Brew(datetime = timezone.now(), RFID = RFID)
+	brew.save()
 
 def add_brewer(data):
 	brewer = CoffeeBrewer(datetime = timezone.now(), RFID = data.get('RFID'), name = data.get('NAME'))

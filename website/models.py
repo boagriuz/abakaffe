@@ -6,10 +6,9 @@ from django.db import models
 
 class CoffeeBrewer(models.Model):
 	datetime = models.DateTimeField()
-	RFID = models.CharField(max_length=10)
+	RFID = models.CharField(max_length=10, primary_key = True)
 	name = models.CharField(max_length=20)
 	brews = models.IntegerField(default=0)
 
 	def __unicode__(self):
 		return self.RFID
-
