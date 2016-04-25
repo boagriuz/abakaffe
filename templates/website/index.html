@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html>
+
+{% load staticfiles %}
+
 <head lang="en">
     <meta charset="UTF-8">
     <title>Abakaffe</title>
     <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
-    <script src="../website/static/website/js/liquidFillGauge.js" language="JavaScript"></script>
+    {% load staticfiles %}
+    <script src="{% static "website/js/liquidFillGauge.js" %}" language="JavaScript"></script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<!-- jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<!-- Latest compiled JavaScript -->
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="../website/static/website/css/mainStyleSheet.css">
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static "website/css/mainStyleSheet.css" %}">
     <style>
         .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
     </style>
@@ -28,7 +33,7 @@
 <svg id="fillgauge1" width="97%" height="250" onclick="gauge1.update(NewValue());"></svg>
 <script language="JavaScript">
 
- 
+
     var config1 = liquidFillGaugeDefaultSettings();
     config1.circleColor = "#D4AB6A";
     config1.textColor = "#553300";

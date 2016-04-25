@@ -1,8 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render, loader
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from .models import CoffeeBrewer
+
+
+def index(request):
+	template = loader.get_template("website/index.html")
+	# context = {'something' : something}
+	return HttpResponse(template.render())
+
+
 
 @csrf_exempt
 def brewer_post(request):
