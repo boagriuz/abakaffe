@@ -20,12 +20,12 @@ from django.conf.urls.static import static
 
 
 app_name = 'website'
+app_name = 'update'
 
 urlpatterns = [
-
+    url(r'^update/', include('update.urls')),
     url(r'^website/', include('website.urls')),
     url(r'^admin/', admin.site.urls),
-
 ]
 
 #check if DEBUG = True
