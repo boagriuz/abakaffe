@@ -24,6 +24,11 @@ def brewer_post(request):
 		ID = request.META['QUERY_STRING']
 		#Fetching RFID from request
 		response.content = RFID_in_DB(ID)
+		if response.content:
+			entry = CoffeeBrewer.objects.get(RFID = ID)
+			entry.brews += 1
+			print(entry.brews)
+			entry.save()
 	return response
 
 def RFID_in_DB(ID):
