@@ -23,7 +23,7 @@ app_name = 'website'
 
 urlpatterns = [
 
-    url(r'^website/', include('website.urls')),
+    url(r'^', include('website.urls')),
     url(r'^admin/', admin.site.urls),
 
 ]
