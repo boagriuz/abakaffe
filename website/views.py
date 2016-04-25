@@ -6,11 +6,11 @@ from .models import CoffeeBrewer
 
 weight = 0
 
-#def index(request):
-#	print(request)
-#	template = loader.get_template("website/index.html")
-#	# context = {'something' : something}
-#	return HttpResponse(template.render())
+def index(request):
+	print(request)
+	template = loader.get_template("website/index.html")
+	# context = {'something' : something}
+	return HttpResponse(template.render())
 
 @csrf_exempt
 def brewer_post(request):
