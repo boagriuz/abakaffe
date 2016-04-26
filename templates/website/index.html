@@ -1,33 +1,39 @@
 {% extends "website/base.html" %}
 
-
 {% block content %}
 
-
     <div class="row">
-	<div id="liquid" class="col-lg-4">
-		<svg id="fillgauge1" width="97%" height="250" onclick="gauge1.update(NewValue());"></svg>
-		<script language="JavaScript">
+        <div id="liquid" class="col-lg-4">
+            <svg id="fillgauge1" width="97%" height="250" onload="gauge1.update(NewValue());"></svg>
+            <script language="JavaScript">
 
-    var config1 = liquidFillGaugeDefaultSettings();
-    config1.circleColor = "#D4AB6A";
-    config1.textColor = "#553300";
-    config1.waveTextColor = "#805615";
-    config1.waveColor = "#AA7D39";
-    config1.circleThickness = 0.2;
-    config1.textVertPosition = 0.2;
-    config1.waveAnimateTime = 1000;
-	var gauge1 = loadLiquidFillGauge("fillgauge1", 55, config1);
-    function NewValue(){
-        if(Math.random() > .5){
-            return Math.round(Math.random()*100);
-        } else {
-            return (Math.random()*100).toFixed(1);
-        }
-    }
-</script>
-	</div>
-	<div id="chart_div" class="col-lg-8"></div>
-</div>
+                var config1 = liquidFillGaugeDefaultSettings();
+                config1.circleColor = "#D4AB6A";
+                config1.textColor = "#553300";
+                config1.waveTextColor = "#805615";
+                config1.waveColor = "#AA7D39";
+                config1.circleThickness = 0.05;
+                config1.textVertPosition = 0.5;
+                config1.waveAnimateTime = 1000;
+
+                var gauge1 = loadLiquidFillGauge("fillgauge1", 55, config1);
+                function NewValue() {
+
+                    var maxWeight = 2500; //grams
+                    var currentWeight = 1223;
+
+                    if(maxWeight == 0) return 0;
+
+                    if(currentWeight == 0) return 100;
+
+                    if (maxWeight >= currentWeight) {
+                        return ((currentWeight / maxWeight) * 100).toFixed(1);
+                    }else return 100;
+
+                }
+            </script>
+        </div>
+        <div id="chart_div" class="col-lg-8"></div>
+    </div>
 
 {% endblock content %}
