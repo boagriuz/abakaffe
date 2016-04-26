@@ -1,1 +1,4 @@
 .idea/
+update/migrations/
+website/__pycache__/
+website/migrations/
