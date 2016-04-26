@@ -1,5 +1,5 @@
 .idea/
-update/migrations/
+update/__pycache__/
 website/__pycache__/
-website/migrations/
+*.pyc
 secrets.py
