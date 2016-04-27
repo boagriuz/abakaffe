@@ -24,13 +24,12 @@ app_name = 'update'
 
 urlpatterns = [
 
-<<<<<<< HEAD
+
     url(r'^website/', include('website.urls')),
     url(r'^highscores', include('highscores.urls')),
-=======
+
     url(r'^', include('website.urls')),
     url(r'^update/', include('update.urls')),
->>>>>>> master
     url(r'^admin/', admin.site.urls),
 ]
 

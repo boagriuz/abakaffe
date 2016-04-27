@@ -3,17 +3,17 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from .models import CoffeeBrewer
-
-weight = 0
-
+from update.views import weight
+from django.shortcuts import render_to_response
 
 def index(request):
-    return render(request, "website/index.html")
-
+    print(request)
+    template = loader.get_template("website/index.html")
+    context = {'WEIGHT' : weight}
+    return render_to_response(template, context)
 
 def highscore(request):
     return render(request, "website/highscore.html")
-
 
 def about(request):
     return render(request, "website/about.html")
@@ -21,33 +21,6 @@ def about(request):
 
 @csrf_exempt
 def brewer_post(request):
-<<<<<<< HEAD
-	response = HttpResponse()
-	if request.method == 'POST':
-		ID = request.POST.get('RFID')
-		name = request.POST.get('NAME')
-		#Check if card is already registered
-		s = RFID_in_DB(ID)
-		if not s:
-			print(request.POST)
-			add_brewer(request.POST)
-			print("Added user to DB")
-		else:
-			print("User already in DB")
-		return HttpResponse()
-
-	elif request.method == 'GET':
-		ID = request.META['QUERY_STRING']
-		#Fetching RFID from request
-		response.content = RFID_in_DB(ID)
-		if response.content:
-			#entry = CoffeeBrewer.objects.get(RFID = ID)
-			#entry.brews += 1
-			add_brew(ID)
-			#print(entry.brews)
-			#entry.save()
-	return response
-=======
     response = HttpResponse()
     if request.method == 'POST':
         ID = request.POST.get('RFID')
@@ -109,7 +82,7 @@ def brewer_post(request):
             entry.save()
     return response
 
->>>>>>> master
+
 
 def RFID_in_DB(ID):
     entry = CoffeeBrewer.objects.filter(RFID=ID)
@@ -124,3 +97,5 @@ def add_brew(RFID):
 def add_brewer(data):
     brewer = CoffeeBrewer(datetime=timezone.now(), RFID=data.get('RFID'), name=data.get('NAME'))
     brewer.save()
+
+

@@ -38,11 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website',
-<<<<<<< HEAD
     'highscores',
-=======
     'update',
->>>>>>> master
 ]
 
 MIDDLEWARE_CLASSES = [
