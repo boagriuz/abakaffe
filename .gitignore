@@ -1,4 +1,7 @@
-.idea/
+*.idea/
+.idea/*.xml
+.idea/*.iml
+.idea/*.ids
 update/__pycache__/
 website/__pycache__/
 *.pyc
