@@ -2,13 +2,19 @@ from django.shortcuts import render
 import datetime
 from models import Brews
 import operator
-
+from update.models import CoffeeBrewer
 
 # Create your views here.
 
 def get_monthly_highscore():
 	start_date = datetime.datetime.now() - datetime.timedelta(30)
 	entries = Brews.objects.filter(dateTime__gt = start_date)
+	scores = get_scores(entries)
+	highscores = get_top_10(scores)
+	return highscores
+
+def get_alltime_highscore():
+	entries = Brews.objects.all()
 	scores = get_scores(entries)
 	highscores = get_top_10(scores)
 	return highscores
@@ -20,19 +26,12 @@ def get_scores(queryset):
 	scores = {}
 	for entry in queryset:
 		ID = entry.RFID
-		if ID in scores.keys():
-			scores[ID] += 1
+		name = CoffeeBrewer.objects.values_list("name", flat=True).filter(RFID = ID)[0]
+		if name in scores.keys():
+			scores[name] += 1
 		else:
-			scores[ID] = 1
+			scores[name] = 1
 	return scores
-
-
-
-def get_alltime_highscore():
-	entries = Brews.objects.all()
-	scores = get_scores(entries)
-	highscores = get_top_10(scores)
-	return highscores
 
 
 
@@ -41,3 +40,8 @@ def get_top_10(scores):#scores must be a dict
 	top_scores = sorted(scores.items(), key=operator.itemgetter(1))
 	top_scores.reverse()
 	return top_scores[:10]
+
+
+
+
+

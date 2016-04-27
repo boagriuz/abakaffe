@@ -1,6 +1,6 @@
 from django.test import TestCase
 from highscores.models import Brews
-from website.models import CoffeeBrewer
+from update.models import CoffeeBrewer
 from django.utils import timezone
 from highscores.views import get_monthly_highscore, get_alltime_highscore
 import datetime
@@ -32,8 +32,8 @@ class BrewerTestCase(TestCase):
 
 
 	def test_monthly_highscores(self):
-		self.assertEqual(get_monthly_highscore(), [(self.a, 3), (self.b, 2), (self.c, 1)])
+		self.assertEqual(get_monthly_highscore(), [('Anders', 3), ('Alexander', 2), ('Magnus', 1)])
 
 
 	def test_get_alltime_highscore(self):
-		self.assertEqual(get_alltime_highscore(), [(self.d, 5), (self.a, 3), (self.b, 2), (self.c, 1)])
+		self.assertEqual(get_alltime_highscore(), [('Even', 5), ('Anders', 3), ('Alexander', 2), ('Magnus', 1)])
