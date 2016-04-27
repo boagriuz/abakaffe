@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import datetime
-from models import Brews
+from .models import Brews
 import operator
 
 

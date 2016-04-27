@@ -6,4 +6,4 @@ from django.db import models
 
 class Brews(models.Model):
 	dateTime = models.DateTimeField()
-	RFID = models.ForeignKey('website.CoffeeBrewer')
+	RFID = models.ForeignKey('update.CoffeeBrewer')
