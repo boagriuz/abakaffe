@@ -3,3 +3,11 @@ update/__pycache__/
 website/__pycache__/
 *.pyc
 secrets.py
+update/__init__.pyc
+update/admin.pyc
+update/models.py
+update/models.pyc
+update/urls.pyc
+update/views.pyc
+migrations/
+db.sqlite3
