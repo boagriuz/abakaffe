@@ -1,93 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Abakaffe</title>
-    <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
-    <script src="liquidFillGauge.js" language="JavaScript"></script>
-	
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script src="graph.js" language="JavaScript"></script>
-	
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-	<!-- Latest compiled JavaScript -->
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="mainStyleSheet.css">
+{% extends "website/base.html" %}
 
-</head>
-<body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-		<li><a class="navbar-brand" href="highscore.html" id="highscore">Highscore</a></li>
-        <li class="active"><a href="index.html" id="home">Home</a></li>
-        <li><a href="about.html" id="about">About</a></li>
-      </ul>
+{% block content %}
+
+    <div class="row">
+        <div id="liquid" class="col-lg-4">
+            <svg id="fillgauge1" width="97%" height="250" onload="gauge1.update(NewValue());"></svg>
+            <script language="JavaScript">
+
+                var config1 = liquidFillGaugeDefaultSettings();
+                config1.circleColor = "#D4AB6A";
+                config1.textColor = "#553300";
+                config1.waveTextColor = "#805615";
+                config1.waveColor = "#AA7D39";
+                config1.circleThickness = 0.05;
+                config1.textVertPosition = 0.5;
+                config1.waveAnimateTime = 1000;
+
+                var gauge1 = loadLiquidFillGauge("fillgauge1", 55, config1);
+                function NewValue() {
+
+                    var maxWeight = 2500; //grams
+                    var currentWeight = 1223;
+
+                    if(maxWeight == 0) return 0;
+
+                    if(currentWeight == 0) return 100;
+
+                    if (maxWeight >= currentWeight) {
+                        return ((currentWeight / maxWeight) * 100).toFixed(1);
+                    }else return 100;
+
+                }
+            </script>
+        </div>
+        <div id="chart_div" class="col-lg-8"></div>
     </div>
-  </div>
-</div>
 
-<script>
-
-$('.navbar-nav > li > a').click( function() {
-    $('.navbar-nav > li.active').removeClass('active');
-    $(this).parent().addClass('active');
-} );
-
-</script>
-<div class="wide">
-  	<div class="col-xs-5 line"><hr></div>
-    <div class="col-xs-2 logo">Abakaffe</div>
-    <div class="col-xs-5 line"><hr></div>
-	</div>
-	
-<div class="row">
-	<div id="liquid" class="col-lg-4">
-		<svg id="fillgauge1" width="97%" height="250" onclick="gauge1.update(NewValue());"></svg>
-		<script language="JavaScript">
-
- 
-    var config1 = liquidFillGaugeDefaultSettings();
-    config1.circleColor = "#D4AB6A";
-    config1.textColor = "#553300";
-    config1.waveTextColor = "#805615";
-    config1.waveColor = "#AA7D39";
-    config1.circleThickness = 0.2;
-    config1.textVertPosition = 0.2;
-    config1.waveAnimateTime = 1000;
-	var gauge1 = loadLiquidFillGauge("fillgauge1", 55, config1);
-
-    function NewValue(){
-        if(Math.random() > .5){
-            return Math.round(Math.random()*100);
-        } else {
-            return (Math.random()*100).toFixed(1);
-        }
-    }
-</script>
-	</div>
-	<div id="chart_div" class="col-lg-8"></div>
-</div>
-<div id="subscribe">
-	<nav class="navbar navbar-default">
-		<p class="navbar-text">Get notified when your coffee is ready</p>
-		<form class="navbar-form navbar-left" role="search">
-			<div class="input-group" id="input_group">
-				<input type="text" class="form-control" placeholder="Student Email" size="35">
-				<span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
-			</div>
-		</form>
-		<p class="navbar-text">Within next</p>
-		<form class="navbar-form navbar-left" role="search">
-			<input type="number" class="form-control"/>
-		</form>
-		<p class="navbar-text" >Hours</p>
-		<button type="button" class="btn btn-default navbar-btn">Subscribe</button>
-	</nav>
-</div>
-</body>
-</html>
+{% endblock content %}

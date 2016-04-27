@@ -20,13 +20,18 @@ from django.conf.urls.static import static
 
 
 app_name = 'website'
+app_name = 'update'
 
 urlpatterns = [
 
+<<<<<<< HEAD
     url(r'^website/', include('website.urls')),
     url(r'^highscores', include('highscores.urls')),
+=======
+    url(r'^', include('website.urls')),
+    url(r'^update/', include('update.urls')),
+>>>>>>> master
     url(r'^admin/', admin.site.urls),
-
 ]
 
 #check if DEBUG = True

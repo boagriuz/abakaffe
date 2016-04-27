@@ -1,51 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Abakaffe</title>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<!-- Latest compiled JavaScript -->
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="mainStyleSheet.css">
-</head>
-<body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-		<li><a class="navbar-brand" href="highscore.html" id="highscore">Highscore</a></li>
-        <li><a href="index.html" id="home">Home</a></li>
-        <li><a href="about.html" id="about">About</a></li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div>
-</div>
-<script>
-$("#about").click(function() {
-  $('li.active').removeClass('active');
-  $('li').eq($(this).parent().index()).addClass('active');
-});
+{% extends "website/base.html" %}
 
-$("#home").click(function(e) {
-  $('li.active').removeClass('active');
-  $('li').eq($(this).parent().index()).addClass('active');
-})
+{% block content %}
+    <script>
+        $("#about").click(function () {
+            $('li.active').removeClass('active');
+            $('li').eq($(this).parent().index()).addClass('active');
+        });
 
-$("#highscore").click(function(e) {
-  $('li.active').removeClass('active');
-  $('li').eq($(this).parent().index()).addClass('active');
-})
-</script>
-<div class="wide">
-  	<div class="col-xs-5 line"><hr></div>
-    <div class="col-xs-2 logo">Abakaffe</div>
-    <div class="col-xs-5 line"><hr></div>
-</div>
-<div class="about_text">
-	<h1>About this project</h1>
-	<p>This is a project for TTM4115 Design of Reactive Systems 1</p>
-	<img src="https://media.giphy.com/media/NJokhR7GCs0uY/giphy.gif">
-</div>
-</body>
-</html>
+        $("#home").click(function (e) {
+            $('li.active').removeClass('active');
+            $('li').eq($(this).parent().index()).addClass('active');
+        })
+
+        $("#highscore").click(function (e) {
+            $('li.active').removeClass('active');
+            $('li').eq($(this).parent().index()).addClass('active');
+        })
+    </script>
+
+    <div class="about_text">
+        <h1>About this project</h1>
+        <p>This is a project for TTM4115 Design of Reactive Systems 1</p>
+        <img src="https://media.giphy.com/media/NJokhR7GCs0uY/giphy.gif">
+    </div>
+
+
+{% endblock content %}
