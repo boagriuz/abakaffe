@@ -1,13 +1,14 @@
 from django.shortcuts import render
 import datetime
-import .models
+from models import Brews
 import operator
+
 
 # Create your views here.
 
 def get_monthly_highscore():
 	start_date = datetime.datetime.now() - datetime.timedelta(-30)
-	entries = Brews.objects.filter(datetime > start_date)
+	entries = Brews.objects.filter(dateTime__gt = start_date)
 	scores = get_scores(entries)
 	highscores = get_top_10(scores)
 	return higschores
@@ -38,5 +39,6 @@ def get_alltime_highscore():
 #Takes a dictionary and returns top 10 as a list of tuples
 def get_top_10(scores):#scores must be a dict
 	top_scores = sorted(scores.items(), key=operator.itemgetter(1))
-	topscores.reverse()
+	global top_scores
+	top_scores.reverse()
 	return topscores[:10]

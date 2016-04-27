@@ -24,6 +24,7 @@ app_name = 'website'
 urlpatterns = [
 
     url(r'^website/', include('website.urls')),
+    url(r'^highscores', include('highscores.urls')),
     url(r'^admin/', admin.site.urls),
 
 ]
