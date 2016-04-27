@@ -7,18 +7,20 @@ import operator
 # Create your views here.
 
 def get_monthly_highscore():
-	start_date = datetime.datetime.now() - datetime.timedelta(-30)
+	start_date = datetime.datetime.now() - datetime.timedelta(30)
+	print start_date
 	entries = Brews.objects.filter(dateTime__gt = start_date)
+	print entries
 	scores = get_scores(entries)
 	highscores = get_top_10(scores)
-	return higschores
+	return highscores
 
 
 
 #Takes a queryset and returns a dictionary containing the number of brews for each RFID in the set
 def get_scores(queryset):
 	scores = {}
-	for entry in entries:
+	for entry in queryset:
 		ID = entry.RFID
 		if ID in scores.keys():
 			scores[ID] += 1
@@ -41,4 +43,4 @@ def get_top_10(scores):#scores must be a dict
 	top_scores = sorted(scores.items(), key=operator.itemgetter(1))
 	global top_scores
 	top_scores.reverse()
-	return topscores[:10]
+	return top_scores[:10]
