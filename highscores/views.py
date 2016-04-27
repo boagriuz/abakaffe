@@ -8,9 +8,7 @@ import operator
 
 def get_monthly_highscore():
 	start_date = datetime.datetime.now() - datetime.timedelta(30)
-	print start_date
 	entries = Brews.objects.filter(dateTime__gt = start_date)
-	print entries
 	scores = get_scores(entries)
 	highscores = get_top_10(scores)
 	return highscores
@@ -41,6 +39,5 @@ def get_alltime_highscore():
 #Takes a dictionary and returns top 10 as a list of tuples
 def get_top_10(scores):#scores must be a dict
 	top_scores = sorted(scores.items(), key=operator.itemgetter(1))
-	global top_scores
 	top_scores.reverse()
 	return top_scores[:10]
