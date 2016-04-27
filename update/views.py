@@ -3,8 +3,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from .models import CoffeeBrewer
-
-weight = 0
+from .models import Weight
 
 
 @csrf_exempt
@@ -17,7 +16,9 @@ def brewer_post(request):
         temp_weight = request.POST.get('WEIGHT')
         if temp_weight:
             print(temp_weight)
-            weight = temp_weight
+            entry = Weight.objects.get(pk=1)
+            entry.weight = temp_weight
+            entry.save()
         else:
             # Check if card is already registered
             s = RFID_in_DB(ID)

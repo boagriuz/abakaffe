@@ -13,3 +13,6 @@ class CoffeeBrewer(models.Model):
 	def __unicode__(self):
 		return self.RFID
 
+
+class Weight(models.Model):
+	weight = models.IntegerField(default=0)
