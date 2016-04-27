@@ -23,8 +23,9 @@ app_name = 'website'
 app_name = 'update'
 
 urlpatterns = [
+
+    url(r'^', include('website.urls')),
     url(r'^update/', include('update.urls')),
-    url(r'^website/', include('website.urls')),
     url(r'^admin/', admin.site.urls),
 ]
 
