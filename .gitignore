@@ -2,3 +2,4 @@
 update/__pycache__/
 website/__pycache__/
 *.pyc
+secrets.py
