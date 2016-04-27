@@ -1,6 +1,6 @@
 from django.test import TestCase
 from highscores.models import Brews
-from website.models import CoffeeBrewer
+from update.models import CoffeeBrewer
 from django.utils import timezone
 from highscores.views import get_monthly_highscore, get_alltime_highscore
 import datetime
