@@ -3,14 +3,14 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from .models import CoffeeBrewer
-
-weight = 0
+from update.views import weight
+from django.shortcuts import render_to_response
 
 def index(request):
 	print(request)
 	template = loader.get_template("website/index.html")
-	# context = {'something' : something}
-	return HttpResponse(template.render())
+	context = {'WEIGHT' : weight}
+	return render_to_response(template, context)
 
 @csrf_exempt
 def brewer_post(request):
