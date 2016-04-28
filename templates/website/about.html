@@ -1,22 +1,6 @@
 {% extends "website/base.html" %}
 
 {% block content %}
-    <script>
-        $("#about").click(function () {
-            $('li.active').removeClass('active');
-            $('li').eq($(this).parent().index()).addClass('active');
-        });
-
-        $("#home").click(function (e) {
-            $('li.active').removeClass('active');
-            $('li').eq($(this).parent().index()).addClass('active');
-        })
-
-        $("#highscore").click(function (e) {
-            $('li.active').removeClass('active');
-            $('li').eq($(this).parent().index()).addClass('active');
-        })
-    </script>
 
     <div class="about_text">
         <h1>About this project</h1>
