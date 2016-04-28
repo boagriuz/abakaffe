@@ -1,14 +1,14 @@
 from django.shortcuts import render
 import datetime
-from models import Brews
+from .models import Brews
 import operator
 from update.models import CoffeeBrewer
 import json
 
 
 def view(request):
-	monthly = simplejson.dumps(get_monthly_highscore())
-	alltime = simplejson.dumps(get_alltime_highscore())
+	monthly = json.dumps(get_monthly_highscore())
+	alltime = json.dumps(get_alltime_highscore())
 	return render("highscore.html", {"monthly": monthly, "alltime": alltime})
 
 
