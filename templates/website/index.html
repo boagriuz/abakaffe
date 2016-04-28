@@ -35,10 +35,17 @@
         </div>
         <div id="chart_div" class="col-lg-8"></div>
     </div>
-	<script>
-	window.onload=function () {
-		$('#home').addClass('active');
-	};
-	</script>
+<script>
+window.onload=function () {
+	$('#home').addClass('active');
+};
+</script>
+<script>
+var timeout = setTimeout("location.reload(true);",60000); //reload every 1 minute unless resetTimeout() is called.
+function resetTimeout() {
+	clearTimeout(timeout);
+    timeout = setTimeout("location.reload(true);",60000);
+}
+</script>
 
 {% endblock content %}

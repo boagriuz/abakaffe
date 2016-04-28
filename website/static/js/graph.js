@@ -2,25 +2,34 @@ google.charts.load('current', {packages: ['corechart', 'line']});
 google.charts.setOnLoadCallback(drawBasic);
 
 function drawBasic() {
+	  
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'X');
+	data.addColumn('number', 'Brews');
+	//local variables representing 
+	var mondayBrews = 4;
+	var tuesdayBrews = 6;
+	var wednesdayBrews = 2;
+	var thuesdyBrews = 14;
+	var fridayBrews = 4;
+	var saturdayBrews = 12;
+	var sundayBrews = 1;
 
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'X');
-      data.addColumn('number', 'Brews');
+	data.addRows([
+		['mandag', mondayBrews], ['tirsdag', tuesdayBrews], ['onsdag', wednesdayBrews],
+		['torsdag', thuesdyBrews], ['fredag', fridayBrews], ['lørdag', saturdayBrews], ['søndag', sundayBrews]
+	]);
 
-      data.addRows([
-        ['mandag', 0],   ['tirsdag', 10],  ['onsdag', 23],  ['torsdag', 17],  ['fredag', 18],  ['lørdag', 9], ['søndag', 3]
-      ]);
+	var options = {
+		hAxis: {
+		title: 'Time'
+		},
+		vAxis: {
+		title: 'Brews'
+		}
+	};
 
-      var options = {
-        hAxis: {
-          title: 'Time'
-        },
-        vAxis: {
-          title: 'Brews'
-        }
-      };
+	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
-      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-
-      chart.draw(data, options);
-    }
+	chart.draw(data, options);
+}
