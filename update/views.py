@@ -15,7 +15,7 @@ def brewer_post(request):
 		temp_weight = request.POST.get('WEIGHT')
 		if temp_weight:
 			print(temp_weight)
-			entry = Weight.objects.get(pk=1)
+			entry = Weight.objects.get(key=1)
 			entry.weight = temp_weight
 			entry.save()
 		else:

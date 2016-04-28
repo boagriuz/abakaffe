@@ -6,7 +6,7 @@ from django.db import models
 
 class CoffeeBrewer(models.Model):
 	datetime = models.DateTimeField()
-	RFID = models.CharField(max_length=10)
+	RFID = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=20)
 
 	def __unicode__(self):
@@ -15,3 +15,4 @@ class CoffeeBrewer(models.Model):
 
 class Weight(models.Model):
 	weight = models.IntegerField(default=0)
+	key = models.IntegerField(default=1)
