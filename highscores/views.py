@@ -34,7 +34,6 @@ def get_scores(queryset):
 	return scores
 
 
-
 #Takes a dictionary and returns top 10 as a list of tuples
 def get_top_10(scores):#scores must be a dict
 	top_scores = sorted(scores.items(), key=operator.itemgetter(1))
