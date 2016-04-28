@@ -6,7 +6,7 @@
         <div class="col-md-4" id="highscorelist">
             <ul class="list-group">
                 <li class="list-group-item">
-                    <span class="label label-default label-pill pull-xs-right">14</span>
+                    <span class="label label-default label-pill pull-xs-right" id>14</span>
                     Qbob
                 </li>
                 <li class="list-group-item">
@@ -21,10 +21,24 @@
         </div>
         <div id="chart_div" class="col-lg-8"></div>
     </div>
-	<script>
-	window.onload=function () {
-		$('#highscore').addClass('active');
-	};
-	</script>
+<script>
+window.onload=function () {
+	$('#highscore').addClass('active');
+};
+</script>
+<script>
+var resultLength = 4;
+var listItems = [];
+var score = 5;
+var testScore = 10;
+	
+for(var i=0;i<resultLength;i++){
+	var firstname = 'Bob';
+	var lastname = ' Listerine - ' + i;	
+		listItems.push("<li class='list-group-item'><span class='label label-default label-pill pull-xs-right'>"+ score +"</span>"+firstname+"</li>");
+}
+$('#listHighscore').append(listItems.join(' '));
+$('#listHighscore').listview('refresh');
+</script>
 
 {% endblock content %}
