@@ -8,7 +8,6 @@ from .models import Weight
 
 @csrf_exempt
 def brewer_post(request):
-    global weight
     response = HttpResponse()
     if request.method == 'POST':
         ID = request.POST.get('RFID')
