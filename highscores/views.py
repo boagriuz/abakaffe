@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils import timezone
 import datetime
 from .models import Brews
 import operator
@@ -6,15 +7,15 @@ from update.models import CoffeeBrewer
 import json
 
 
-def view(request):
-	monthly = json.dumps(get_monthly_highscore())
-	alltime = json.dumps(get_alltime_highscore())
-	return render("highscore.html", {"monthly": monthly, "alltime": alltime})
+def get_monthly_alltime():
+	monthly = get_monthly_highscore()
+	alltime = get_alltime_highscore()
+	return monthly, alltime
 
 
 
 def get_monthly_highscore():
-	start_date = datetime.datetime.now() - datetime.timedelta(30)
+	start_date = timezone.now() - datetime.timedelta(30)
 	entries = Brews.objects.filter(dateTime__gt = start_date)
 	scores = get_scores(entries)
 	highscores = get_top_10(scores)
@@ -34,8 +35,7 @@ def get_alltime_highscore():
 def get_scores(queryset):
 	scores = {}
 	for entry in queryset:
-		ID = entry.RFID
-		name = CoffeeBrewer.objects.values_list("name", flat=True).filter(RFID = ID)[0]
+		name = entry.RFID.name
 		if name in scores.keys():
 			scores[name] += 1
 		else:
