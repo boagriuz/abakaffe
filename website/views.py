@@ -17,13 +17,11 @@ def index(request, template="website/index.html"):
     context = {'WEIGHT': Weight.objects.get(key=1).weight, 'STATISTICS': stat}
     return render(request, template, context)
 
-
 def highscore(request, template="website/highscore.html"):
     monthly, alltime = get_monthly_alltime()
     stat = get_statistics()
     context = {'MONTHLY': monthly, 'ALLTIME': alltime, 'STATISTICS': stat}
     return render(request, template, context)
-
 
 def about(request, template="website/about.html"):
     return render(request, template)

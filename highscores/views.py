@@ -6,6 +6,7 @@ import operator
 from update.models import CoffeeBrewer
 import json
 
+days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 def get_monthly_alltime():
 	monthly = get_monthly_highscore()
@@ -72,11 +73,12 @@ def get_top_10(scores):#scores must be a dict
 def sort_statistics(stati):
 	sorted_stat = []
 	today = timezone.now().weekday()
-	for i in range(today, today+7):
+	for i in range(today+1, today+8):
 		if i > 6:
-			sorted_stat.append((i-7, stati[i-7]))
+			sorted_stat.append((days[i-7], stati[i-7]))
 		else:
-			sorted_stat.append((i, stati[i]))
+			sorted_stat.append((days[i], stati[i]))
+
 	return sorted_stat
 
 
