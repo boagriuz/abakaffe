@@ -1,6 +1,7 @@
-{% extends "website/base.html" %}
+{% extends 'website/base.html' %}
 
 {% block content %}
+
 
     <div class="row">
         <div id="liquid" class="col-lg-4">
@@ -20,7 +21,7 @@
                 function NewValue() {
 
                     var maxWeight = 4202; //grams
-                    var currentWeight = "{{ WEIGHT }}";
+                    var currentWeight = '{{ WEIGHT }}';
                     
                     if(maxWeight == 0) return 0;
 
@@ -28,6 +29,7 @@
 
                     if (maxWeight >= currentWeight) {
                         return ((currentWeight / maxWeight) * 100).toFixed(1);
+
                     }else return 100;
                 }
             </script>
@@ -40,6 +42,7 @@ window.onload=function () {
 };
 </script>
 <script>
+
 var timeout = setTimeout("location.reload(true);",60000); //reload every 1 minute unless resetTimeout() is called.
 function resetTimeout() {
 	clearTimeout(timeout);

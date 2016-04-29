@@ -1,5 +1,7 @@
 {% load staticfiles %}
 
+
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -28,9 +30,9 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
 
-                <li id="highscore"><a class="navbar-brand" href="{% url "highscore" %}" >Highscore</a></li>
-                <li id="about"><a href="{% url "index" %}" >Home</a></li>
-                <li id="about"><a href="{% url "about" %}" >About</a></li>
+                <li id="highscore"><a class="navbar-brand" href="{% url 'highscore' %}">Highscore</a></li>
+                <li id="about"><a href="{% url 'index' %}">Home</a></li>
+                <li id="about"><a href="{% url 'about' %}">About</a></li>
 
             </ul>
         </div>
@@ -55,24 +57,25 @@
     <nav class="navbar navbar-default">
         <p class="navbar-text">Get notified when the coffee is ready</p>
 
-        <form class="navbar-form navbar-left" role="search">
+        <form action="/subscribe/" method="POST" class="navbar-form navbar-left" role="search">
+            {% csrf_token %}
+
+            {{ form }}
 
             <div class="input-group" id="input_group">
-                <input type="text" class="form-control" placeholder="Student Email" size="35">
 
+                <input type="text" class="form-control" placeholder="Student Email" size="35" required>
                 <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
+
+                <input type="submit" class="btn btn-default navbar-btn" value="Subscribe"/>
 
             </div>
         </form>
 
-        <button type="button" class="btn btn-default navbar-btn" onclick="clickFunction()">Subscribe</button>
+
     </nav>
 </div>
-<script>
-function clickFunction() {
-	window.alert("Add logic here");
-}
-</script>
+
 
 {% block content %}
 {% endblock content %}
