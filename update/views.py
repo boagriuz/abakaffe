@@ -21,9 +21,8 @@ def brewer_post(request):
 			#Adds a new Brew ot database
 			add_brew(ID)
 		elif name:
-			#Adds a new CoffeeBrewer to database if ID doesn't already exists
+			#Adds a new CoffeeBrewer to database if ID doesn't already exist
 			add_brewer(request.POST)
-
 		return HttpResponse()
 	elif request.method == 'GET':
 		# Fetching RFID from request
