@@ -78,6 +78,7 @@ body {
 
 #highscorelist {
     white-space: nowrap;
-    padding: 50px;
+    padding: 35px;
     max-width: 500px;
+
 }
