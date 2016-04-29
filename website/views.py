@@ -14,7 +14,7 @@ import os
 def index(request, template="website/index.html"):
     subscribe(request)
     stat = get_statistics()
-    context = {'WEIGHT': Weight.objects.get(pk=1).weight, 'STATISTICS': stat}
+    context = {'WEIGHT': Weight.objects.get(key=1).weight, 'STATISTICS': stat}
     return render(request, template, context)
 
 
