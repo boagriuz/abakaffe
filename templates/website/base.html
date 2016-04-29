@@ -6,11 +6,10 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Abakaffe</title>
-    <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
 
+    <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
     <script src="{% static "js/liquidFillGauge.js" %}" language="JavaScript"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!-- jQuery library -->
@@ -51,40 +50,39 @@
     <div class="col-xs-5 line"></div>
 
 </div>
-<div id="subscribe">
-    <form action="/subscribe/" method="POST" class="navbar-form navbar-left" role="search">
-        {% csrf_token %}
-        <div id="subscribe">
-            <nav class="navbar navbar-default">
-                <p class="navbar-text">Get notified when the coffee is ready</p>
-                ​
-                <form class="navbar-form navbar-left" action="/subscribe/" method="post">
-                    {% csrf_token %}
 
-                    <div class="input-group" id="input_group">
-                        {{ form.studmail.errors }}
-                        <input id="{{ form.studmail.id_for_label }}" class="form-control" name="studmail"
-                               type="text" placeholder="Student Email" maxlength="{{ form.studmail.maxlength }}"
-                               value="{{ form.studmail.value }}" size="35">
-                        <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
-                    </div>
-                </form>
-
-                ​<input type="submit" value="Subscribe" class="btn btn-default navbar-btn"/>
-
-            </nav>
-        </div>
-    </form>
+<div id=" subscribe">
 
 
-    </nav>
+    <div id="subscribe">
+        <nav class="navbar navbar-default">
+            <p class="navbar-text">Get notified when the coffee is ready</p>
 
+            <form class="navbar-form navbar-left" action="/subscribe/" method="post" role="search">
 
+                {% csrf_token %}
+                <div class="input-group" id="input_group">
+                    {{ form.studmail.errors }}
 
+                    <input id="{{ form.studmail.id_for_label }}" class="form-control" name="studmail"
+
+                           type="text" placeholder="Student Email" maxlength="{{ form.studmail.maxlength }}"
+                           value="{{ form.studmail.value }}" size="35" required>
+
+                           <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
+
+                    <input type="submit" class="btn btn-default navbar-btn" value="Subscribe"/>
+
+                </div>
+
+            </form>
+
+        </nav>
+    </div>
 </div>
 
-{% block content %}
-{% endblock content %}
+    {% block content %}
+    {% endblock content %}
 
 </body>
 </html>

@@ -17,10 +17,11 @@ body {
 #subscribe {
     white-space: nowrap;
     padding: 10px;
-    position: absolute;
+    position: fixed;
     Width: 100%;
     bottom: 0;
-	margin: 0 0 -30px 0;
+    margin: 0 0 -30px 0;
+
 }
 
 #liquid, #chart_div {
@@ -40,7 +41,7 @@ body {
 .wide {
     white-space: nowrap;
     width: 100%;
-    height: calc(15% - 1px);
+    height: calc(20% - 1px);
     background-image: url('https://ahavahcoffeeco.files.wordpress.com/2015/05/cropped-coffee_header_fade.png');
     background-size: cover;
 }
@@ -77,6 +78,6 @@ body {
 
 #highscorelist {
     white-space: nowrap;
-    padding: 40px;
+    padding: 50px;
     max-width: 500px;
 }

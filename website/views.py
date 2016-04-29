@@ -11,15 +11,9 @@ import smtplib
 def index(request, template="website/index.html"):
     subscribe(request)
     stat = get_statistics()
-    context = {
-        'WEIGHT': Weight.objects.get(pk=1).weight,
-        'STATISTICS': stat,
-        'popup': True,
-    }
-
-
     context = {'WEIGHT': Weight.objects.get(key=1).weight, 'STATISTICS': stat}
     return render(request, template, context)
+
 
 def highscore(request, template="website/highscore.html"):
     monthly, alltime = get_monthly_alltime()
@@ -27,9 +21,9 @@ def highscore(request, template="website/highscore.html"):
     context = {'MONTHLY': monthly, 'ALLTIME': alltime, 'STATISTICS': stat}
     return render(request, template, context)
 
+
 def about(request, template="website/about.html"):
     return render(request, template)
-
 
 def subscribe(request):
     # if POST request
@@ -90,3 +84,4 @@ def subscribe(request):
     return render(request, 'website/index.html', context)
 
     # forms.py => views => models.py => db.sqlite3
+
