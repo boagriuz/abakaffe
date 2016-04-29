@@ -1,7 +1,6 @@
 {% load staticfiles %}
 
 
-
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -54,32 +53,36 @@
 
 </div>
 <div id="subscribe">
-    <nav class="navbar navbar-default">
-        <p class="navbar-text">Get notified when the coffee is ready</p>
+    <form action="/subscribe/" method="POST" class="navbar-form navbar-left" role="search">
+        {% csrf_token %}
+        <div id="subscribe">
+            <nav class="navbar navbar-default">
+                <p class="navbar-text">Get notified when the coffee is ready</p>
+                ​
+                <form class="navbar-form navbar-left" action="/subscribe/" method="post">
+                    {% csrf_token %}
 
-        <form action="/subscribe/" method="POST" class="navbar-form navbar-left" role="search">
-            {% csrf_token %}
+                    <div class="input-group" id="input_group">
+                        {{ form.studmail.errors }}
+                        <input id="{{ form.studmail.id_for_label }}" class="form-control" name="studmail"
+                               type="text" placeholder="Student Email" maxlength="{{ form.studmail.maxlength }}"
+                               value="{{ form.studmail.value }}" size="35">
+                        <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
+                    </div>
+                </form>
 
-            {{ form }}
+                ​<input type="submit" value="Subscribe" class="btn btn-default navbar-btn"/>
 
-            <div class="input-group" id="input_group">
-
-                <input type="text" class="form-control" placeholder="Student Email" size="35" required>
-                <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
-
-                <input type="submit" class="btn btn-default navbar-btn" value="Subscribe" onclick="subscribeClick()"/>
-
-            </div>
-        </form>
+            </nav>
+        </div>
+    </form>
 
 
     </nav>
+
+
+
 </div>
-<script>
-function subscribeClick() {
-    window.alert("You have subscribed");
-}
-</script>
 
 {% block content %}
 {% endblock content %}

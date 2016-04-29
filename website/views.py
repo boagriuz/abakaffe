@@ -1,20 +1,22 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from update.models import Weight
 from highscores.views import get_monthly_alltime, get_statistics
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
 from .models import Subscribe
 from datetime import datetime
 from .forms import NameForm
 from .send_a_mail_bakken_style import mail
 import smtplib
 
-import os
 
 def index(request, template="website/index.html"):
     subscribe(request)
     stat = get_statistics()
-    context = {'WEIGHT': Weight.objects.get(pk=1).weight, 'STATISTICS': stat}
+    context = {
+        'WEIGHT': Weight.objects.get(pk=1).weight,
+        'STATISTICS': stat,
+        'popup': True,
+    }
+
     return render(request, template, context)
 
 
@@ -31,11 +33,13 @@ def about(request, template="website/about.html"):
 
 def subscribe(request):
     # if POST request
+    error_msg = None
+
     if (request.method == 'POST'):
         form = NameForm(request.POST)
 
         # check if valid
-        if (form.is_valid()):
+        if form.is_valid():
             # create timestamp
             now = datetime.now()
 
@@ -48,26 +52,41 @@ def subscribe(request):
             sub_obj = Subscribe(studmail=studmail, created=created)
             sub_obj.save()
 
-            #Send the user a notify mail =)
+            # Send the user a notify mail =)
             try:
 
                 mail(studmail)
-                context = {'success': "<h1>Thank you for subscribing!</h1>"}
+
+                context = {
+                    'form': form,
+                    'error_msg': error_msg,
+
+                }
+
+                return redirect('index.html', context)
 
             except smtplib.SMTPException as e:
 
-                print("Failed to send notify email: ", e)
-                context = {'error': "<h1>Failed to send email, plz try again.</h1>"}
+                error_msg = "Failed to send notify email: ", e
+
         else:
-            context = {'error': 'Something bad happend :('}
 
-        # redirect to new site
+            error_msg = 'Form is invalid'
 
-        return redirect('/subscribe/', context)
+            # redirect to new site
+
     # if GET request
     else:
+
         form = NameForm()
 
-    return render(request, 'website/base.html', {'form': form})
+    context = {
+
+        'form': form,
+        'error_msg': error_msg,
+
+    }
+
+    return render_to_response(request, 'website/index.html', context)
 
     # forms.py => views => models.py => db.sqlite3

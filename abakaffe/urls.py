@@ -26,7 +26,6 @@ urlpatterns = [
 
     url(r'^', include('website.urls')),
     url(r'^update/', include('update.urls')),
-    url(r'^website/', include('update.urls')),
 
     # url(r'^admin/', admin.site.urls),
 
