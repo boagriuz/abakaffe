@@ -40,12 +40,6 @@ def get_monthly_highscore():
 	highscores = get_top_10(scores)
 	return highscores
 
-def get_alltime_highscore():
-	entries = Brews.objects.all()
-	scores = get_scores(entries)
-	highscores = get_top_10(scores)
-	return highscores
-
 
 
 def get_alltime_highscore():
@@ -61,13 +55,12 @@ def get_scores(queryset):
 	scores = {}
 	for entry in queryset:
 		name = entry.RFID.name
-		ID = entry.RFID
-		name = CoffeeBrewer.objects.values_list("name", flat=True).filter(RFID = ID)[0]
 		if name in scores.keys():
 			scores[name] += 1
 		else:
 			scores[name] = 1
 	return scores
+
 
 
 #Takes a dictionary and returns top 10 as a list of tuples
