@@ -4,3 +4,4 @@ website/__pycache__/
 *.pyc
 abakaffe/settings.py
 db.sqlite3
+secret.py
