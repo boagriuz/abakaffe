@@ -13,6 +13,25 @@ def get_monthly_alltime():
 	return monthly, alltime
 
 
+def get_statistics():
+	statistics = statistics()
+	return statistics
+
+
+#Creates statistics of the last seven days, returns number og brews for each weekday
+def statistics():
+	start_date = timezone.now() - datetime.timedelta(7)
+	entries = Brews.objects.filter(dateTime__gt = start_date)
+	stat = {}
+	for entry in entries:
+		day = entry.dateTime.weekday()
+		if day in stat:
+			stat[day] += 1
+		else:
+			stat[day] = 1
+	return stat
+
+
 
 def get_monthly_highscore():
 	start_date = timezone.now() - datetime.timedelta(30)

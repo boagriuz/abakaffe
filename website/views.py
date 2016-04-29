@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from update.models import Weight
-from highscores.views import get_monthly_alltime
+from highscores.views import get_monthly_alltime, get_statistics
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from .models import Subscribe
@@ -13,13 +13,15 @@ import os
 
 def index(request, template="website/index.html"):
     subscribe(request)
-    context = {'WEIGHT': Weight.objects.get(pk=1).weight}
+    statistics = get_statistics()
+    context = {'WEIGHT': Weight.objects.get(pk=1).weight, 'STATISTICS': statistics}
     return render(request, template, context)
 
 
 def highscore(request, template="website/highscore.html"):
     monthly, alltime = get_monthly_alltime()
-    context = {'MONTHLY': monthly, 'ALLTIME': alltime}
+    statistics = get_statistics()
+    context = {'MONTHLY': monthly, 'ALLTIME': alltime, 'STATISTICS': statistics}
     return render(request, template, context)
 
 
