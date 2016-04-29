@@ -4,7 +4,6 @@ from highscores.views import get_monthly_alltime, get_statistics
 from .models import Subscribe
 from datetime import datetime
 from .forms import NameForm
-from .send_a_mail_bakken_style import mail
 import smtplib
 
 
