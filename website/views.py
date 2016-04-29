@@ -87,6 +87,6 @@ def subscribe(request):
 
     }
 
-    return render_to_response(request, 'website/index.html', context)
+    return render(request, 'website/index.html', context)
 
     # forms.py => views => models.py => db.sqlite3
