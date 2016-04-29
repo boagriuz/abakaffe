@@ -39,7 +39,7 @@ body {
 .wide {
     white-space: nowrap;
     width: 100%;
-    height: calc(20% - 1px);
+    height: calc(15% - 1px);
     background-image: url('https://ahavahcoffeeco.files.wordpress.com/2015/05/cropped-coffee_header_fade.png');
     background-size: cover;
 }
@@ -76,6 +76,6 @@ body {
 
 #highscorelist {
     white-space: nowrap;
-    padding: 50px;
+    padding: 40px;
     max-width: 500px;
 }
