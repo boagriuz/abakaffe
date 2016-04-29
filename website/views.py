@@ -13,15 +13,15 @@ import os
 
 def index(request, template="website/index.html"):
     subscribe(request)
-    statistics = get_statistics()
-    context = {'WEIGHT': Weight.objects.get(pk=1).weight, 'STATISTICS': statistics}
+    stat = get_statistics()
+    context = {'WEIGHT': Weight.objects.get(pk=1).weight, 'STATISTICS': stat}
     return render(request, template, context)
 
 
 def highscore(request, template="website/highscore.html"):
     monthly, alltime = get_monthly_alltime()
-    statistics = get_statistics()
-    context = {'MONTHLY': monthly, 'ALLTIME': alltime, 'STATISTICS': statistics}
+    stat = get_statistics()
+    context = {'MONTHLY': monthly, 'ALLTIME': alltime, 'STATISTICS': stat}
     return render(request, template, context)
 
 

@@ -14,8 +14,8 @@ def get_monthly_alltime():
 
 
 def get_statistics():
-	statistics = statistics()
-	return statistics
+	stat = statistics()
+	return stat
 
 
 #Creates statistics of the last seven days, returns number og brews for each weekday
