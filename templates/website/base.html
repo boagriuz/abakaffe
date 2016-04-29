@@ -51,34 +51,23 @@
 
 </div>
 
-<div id=" subscribe">
+<div id="subscribe">
+    <nav class="navbar navbar-default">
+        <p class="navbar-text">Get notified when the coffee is ready</p>
+​
+        <form class="navbar-form navbar-left" action="/" method="post">
+            {% csrf_token %}
+            <div class="input-group" id="input_group">
+              {{ form.studmail.errors }}
+                <input id="{{ form.studmail.id_for_label }}" class="form-control" name="studmail" type="text" placeholder="ntnu-username" maxlength="{{ form.studmail.maxlength }}" value="{{ form.studmail.value }}" size="35">
+                <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
+            </div>
 
+            <input type="submit" value="Subscribe" class="btn btn-default navbar-btn"/>
+        </form>
+​
 
-    <div id="subscribe">
-        <nav class="navbar navbar-default">
-            <p class="navbar-text">Get notified when the coffee is ready</p>
-
-            <form class="navbar-form navbar-left" action="/subscribe/" method="post" role="search">
-
-                {% csrf_token %}
-                <div class="input-group" id="input_group">
-                    {{ form.studmail.errors }}
-
-                    <input id="{{ form.studmail.id_for_label }}" class="form-control" name="studmail"
-
-                           type="text" placeholder="Student Email" maxlength="{{ form.studmail.maxlength }}"
-                           value="{{ form.studmail.value }}" size="35" required>
-
-                           <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
-
-                    <input type="submit" class="btn btn-default navbar-btn" value="Subscribe"/>
-
-                </div>
-
-            </form>
-
-        </nav>
-    </div>
+    </nav>
 </div>
 
     {% block content %}

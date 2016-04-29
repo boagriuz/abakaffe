@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from update.models import Weight
 from highscores.views import get_monthly_alltime, get_statistics
 from .models import Subscribe
@@ -25,11 +25,12 @@ def highscore(request, template="website/highscore.html"):
 def about(request, template="website/about.html"):
     return render(request, template)
 
+
 def subscribe(request):
     # if POST request
     error_msg = None
 
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         form = NameForm(request.POST)
 
         # check if valid
@@ -48,16 +49,14 @@ def subscribe(request):
 
             # Send the user a notify mail =)
             try:
-
                 mail(studmail)
-
                 context = {
                     'form': form,
                     'error_msg': error_msg,
 
                 }
 
-                return redirect('index.html', context)
+                return HttpResponseRedirect("/subscribe/", context)
 
             except smtplib.SMTPException as e:
 
@@ -81,7 +80,6 @@ def subscribe(request):
 
     }
 
-    return render(request, 'website/index.html', context)
+    return render(request, "website/index.html", context)
 
     # forms.py => views => models.py => db.sqlite3
-
