@@ -30,8 +30,8 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
 
-                <li id="highscore"><a class="navbar-brand" href="{% url 'highscore' %}">Highscore</a></li>
-                <li id="about"><a href="{% url 'index' %}">Home</a></li>
+                <li id="highscore"><a href="{% url 'highscore' %}">Highscore</a></li>
+                <li id="home"><a href="{% url 'index' %}">Home</a></li>
                 <li id="about"><a href="{% url 'about' %}">About</a></li>
 
             </ul>
@@ -67,7 +67,7 @@
                 <input type="text" class="form-control" placeholder="Student Email" size="35" required>
                 <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
 
-                <input type="submit" class="btn btn-default navbar-btn" value="Subscribe"/>
+                <input type="submit" class="btn btn-default navbar-btn" value="Subscribe" onclick="subscribeClick()"/>
 
             </div>
         </form>
@@ -75,7 +75,11 @@
 
     </nav>
 </div>
-
+<script>
+function subscribeClick() {
+    window.alert("You have subscribed");
+}
+</script>
 
 {% block content %}
 {% endblock content %}
