@@ -38,9 +38,3 @@ class BrewerTestCase(TestCase):
 	def test_get_alltime_highscore(self):
 		self.assertEqual(get_alltime_highscore(), [('Even', 5), ('Anders', 3), ('Alexander', 2), ('Magnus', 1)])
 
-
-
-
-
-
-
