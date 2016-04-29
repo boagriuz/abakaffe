@@ -28,7 +28,7 @@ In prompt: <br/>
   
 8) type ```localhost:8080``` into your browser <br/>
 
-  - You should see a Congratulation Django is working page! <br/>
+  - You should see the Abakaffe django website, yay! <br/>
   
 <br/>
 :+1: Looks great - it's ready to merge! :shipit:
