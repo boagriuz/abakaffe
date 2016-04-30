@@ -28,8 +28,11 @@ def brewer_post(request):
     elif request.method == 'GET':
         # Fetching RFID from request
         rfid = request.META['QUERY_STRING']
-        # Checking if RFID already in database
-        response.content = RFID_in_DB(rfid)
+        try:
+            #Check if RFID already in database
+            response.content = RFID_in_DB(rfid)
+        except ValueError:
+            return response
     return response
 
 
