@@ -113,7 +113,7 @@ def mail(to, attach=None):
             <p>Best regards, <br> </p>
             <br>
             <p>
-                <img src="https://49.media.tumblr.com/23b345acdf7f9639bf94bb9bbe8f8191/tumblr_nvu767z9eS1s30ko5o1_500.gif" alt="I need Coffee" height="150" width="250"/>
+                ABAKAFFE
 
             <br>
             </p>
