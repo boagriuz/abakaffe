@@ -7,7 +7,7 @@ from django.db import models
 
 class Subscribe(models.Model):
     studmail = models.TextField(primary_key=True, max_length=20, default=0)
-    created = models.TextField(max_length=10, default=0)
+    created = models.IntegerField(default=0)
 
 '''
 # use case 1:

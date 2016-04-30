@@ -45,7 +45,12 @@ def subscribe(request):
             # set db fields # process form.cleaned_data
 
             studmail = form.cleaned_data['studmail'] + "@stud.ntnu.no"
-            created = str(now.hour) + ":" + str(now.minute)
+            hours = now.hour
+            minutes = now.minute
+            seconds = now.second
+
+            #seconds
+            created = (hours * 3600) + (minutes * 60) + seconds
 
             # save to database
             sub_obj = Subscribe(studmail=studmail, created=created)
