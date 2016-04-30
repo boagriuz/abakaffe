@@ -17,7 +17,7 @@ def brewer_post(request):
         temp_weight = request.POST.get('WEIGHT')
         # Checks what to do
         if temp_weight:
-            create_weight_object()
+            create_weight_object(temp_weight)
         elif brew:
             # Adds a new Brew ot database
             add_brew(ID)
