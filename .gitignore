@@ -5,4 +5,6 @@
 update/__pycache__/
 website/__pycache__/
 *.pyc
-secrets.py
+abakaffe/settings.py
+db.sqlite3
+secret.py

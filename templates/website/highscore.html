@@ -4,22 +4,78 @@
 
     <div class="row">
         <div class="col-md-4" id="highscorelist">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <span class="label label-default label-pill pull-xs-right">14</span>
-                    Qbob
-                </li>
-                <li class="list-group-item">
-                    <span class="label label-default label-pill pull-xs-right">2</span>
-                    Kaffebro
-                </li>
-                <li class="list-group-item">
-                    <span class="label label-default label-pill pull-xs-right">1</span>
-                    Brewmaster
-                </li>
+            <ul class="list-group" id="listHighscore">
+
             </ul>
         </div>
         <div id="chart_div" class="col-lg-8"></div>
     </div>
+<script type="text/javascript">
+window.onload=function () {
+	$('#highscore').addClass('active');
+};
+</script>
+<script>
+var monthly = "{{ MONTHLY|safe }}";
+var alltime = "{{ ALLTIME|safe }}";
+var listItems = [];
+var j = 0;
+
+monthly = monthly.replace(/[^a-zA-Z1-9,]/g, "");
+monthly = monthly.split(",");
+
+alltime = alltime.replace(/[^a-zA-Z1-9,]/g, "");
+alltime = alltime.split(",");
+
+for(var i=0; i < monthly.length-1; i+=2){
+	j++;
+    listItems.push("<li class='list-group-item'>"+j+" "+' '+"<span class='label label-default label-pill pull-xs-right'>"+ monthly[i+1] +"</span>"+' ' + monthly[i] +"</li>");
+}
+$('#listHighscore').append(listItems.join(' '));
+</script>
+
+<script>
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+    var stdColor = "SaddleBrown";
+    
+    //number of brews per day
+    var stat = "{{ STATISTICS|safe }}";
+    stat = stat.replace(/[^a-zA-Z0-9,]/g, "");
+    stat = stat.split(",");
+  
+
+    var data = google.visualization.arrayToDataTable([
+        ["Day", "Brews", { role: "style" } ],
+        [stat[0], parseInt(stat[1]), stdColor],
+        [stat[2], parseInt(stat[3]), stdColor],
+        [stat[4], parseInt(stat[5]), stdColor],
+        [stat[6], parseInt(stat[7]), stdColor],
+        [stat[8], parseInt(stat[9]), stdColor],
+        [stat[10], parseInt(stat[11]), stdColor],
+        [stat[12], parseInt(stat[13]), stdColor]
+    ]);
+
+    var view = new google.visualization.DataView(data);
+    view.setColumns([0, 1,
+                     { calc: "stringify",
+                        sourceColumn: 1,
+                        type: "string",
+                        role: "annotation" },
+                    2]);
+
+    var options = {
+      title: "Number of brews per week",
+      width: 1000,
+      height: 400,
+      bar: {groupWidth: "95%"},
+      legend: { position: "none" },
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+      
+    chart.draw(view, options);
+}
+</script>
 
 {% endblock content %}

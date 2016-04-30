@@ -18,18 +18,18 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
+app_website = 'website'
+app_update = 'update'
 
-app_name = 'website'
-app_name = 'update'
 
 urlpatterns = [
 
     url(r'^', include('website.urls')),
     url(r'^update/', include('update.urls')),
-    url(r'^admin/', admin.site.urls),
+    # url(r'^admin/', admin.site.urls),
+
 ]
 
-#check if DEBUG = True
+# check if DEBUG = True
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-

@@ -1,6 +1,8 @@
-{% extends "website/base.html" %}
+{% extends 'website/base.html' %}
+
 
 {% block content %}
+
 
     <div class="row">
         <div id="liquid" class="col-lg-4">
@@ -19,21 +21,79 @@
                 var gauge1 = loadLiquidFillGauge("fillgauge1", 55, config1);
                 function NewValue() {
 
-                    var maxWeight = 2500; //grams
-                    var currentWeight = 1223;
-
+                    var maxWeight = 4202; //grams
+                    var currentWeight = '{{ WEIGHT }}';
+                    
                     if(maxWeight == 0) return 0;
 
                     if(currentWeight == 0) return 100;
 
                     if (maxWeight >= currentWeight) {
                         return ((currentWeight / maxWeight) * 100).toFixed(1);
-                    }else return 100;
 
+                    }else return 100;
                 }
             </script>
         </div>
         <div id="chart_div" class="col-lg-8"></div>
     </div>
+<script>
+window.onload=function () {
+	$('#home').addClass('active');
+};
+</script>
+<script>
+
+var timeout = setTimeout("location.reload(true);",60000); //reload every 1 minute unless resetTimeout() is called.
+function resetTimeout() {
+	clearTimeout(timeout);
+    timeout = setTimeout("location.reload(true);",60000);
+}
+
+</script>
+
+<script>
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+    var stdColor = "SaddleBrown";
+    
+    //number of brews per day
+    var stat = "{{ STATISTICS|safe }}";
+    stat = stat.replace(/[^a-zA-Z0-9,]/g, "");
+    stat = stat.split(",");
+  
+
+    var data = google.visualization.arrayToDataTable([
+        ["Day", "Brews", { role: "style" } ],
+        [stat[0], parseInt(stat[1]), stdColor],
+        [stat[2], parseInt(stat[3]), stdColor],
+        [stat[4], parseInt(stat[5]), stdColor],
+        [stat[6], parseInt(stat[7]), stdColor],
+        [stat[8], parseInt(stat[9]), stdColor],
+        [stat[10], parseInt(stat[11]), stdColor],
+        [stat[12], parseInt(stat[13]), stdColor]
+    ]);
+
+    var view = new google.visualization.DataView(data);
+    view.setColumns([0, 1,
+                     { calc: "stringify",
+                        sourceColumn: 1,
+                        type: "string",
+                        role: "annotation" },
+                    2]);
+
+    var options = {
+      title: "Number of brews per week",
+      width: 1000,
+      height: 400,
+      bar: {groupWidth: "95%"},
+      legend: { position: "none" },
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+      
+    chart.draw(view, options);
+}
+</script>
 
 {% endblock content %}

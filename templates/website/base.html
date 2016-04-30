@@ -1,16 +1,15 @@
 {% load staticfiles %}
 
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
     <title>Abakaffe</title>
-    <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
 
+    <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
     <script src="{% static "js/liquidFillGauge.js" %}" language="JavaScript"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="{% static "js/graph.js" %}" language="JavaScript"></script>
-
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!-- jQuery library -->
@@ -28,9 +27,9 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
 
-                <li><a class="navbar-brand" href="{% url "highscore" %}" id="highscore">Highscore</a></li>
-                <li class="active"><a href="{% url "index" %}" id="home">Home</a></li>
-                <li><a href="{% url "about" %}" id="about">About</a></li>
+                <li id="highscore"><a href="{% url 'highscore' %}">Highscore</a></li>
+                <li id="home"><a href="{% url 'index' %}">Home</a></li>
+                <li id="about"><a href="{% url 'about' %}">About</a></li>
 
             </ul>
         </div>
@@ -51,33 +50,28 @@
     <div class="col-xs-5 line"></div>
 
 </div>
+
 <div id="subscribe">
     <nav class="navbar navbar-default">
         <p class="navbar-text">Get notified when the coffee is ready</p>
-
-        <form class="navbar-form navbar-left" role="search">
-
+​
+        <form class="navbar-form navbar-left" action="/" method="post">
+            {% csrf_token %}
             <div class="input-group" id="input_group">
-                <input type="text" class="form-control" placeholder="Student Email" size="35">
-
+              {{ form.studmail.errors }}
+                <input id="{{ form.studmail.id_for_label }}" class="form-control" name="studmail" type="text" placeholder="ntnu-username" maxlength="{{ form.studmail.maxlength }}" value="{{ form.studmail.value }}" size="35">
                 <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
-
             </div>
+
+            <input type="submit" value="Subscribe" class="btn btn-default navbar-btn"/>
         </form>
+​
 
-        <p class="navbar-text">Within the next</p>
-
-        <form class="navbar-form navbar-left" role="search">
-            <input style="width: 66px;" type="number" min="1" max="24" value="1" class="form-control"/>
-        </form>
-
-        <p class="navbar-text">hours</p>
-        <button type="button" class="btn btn-default navbar-btn">Subscribe</button>
     </nav>
 </div>
 
-{% block content %}
-{% endblock content %}
+    {% block content %}
+    {% endblock content %}
 
 </body>
 </html>
