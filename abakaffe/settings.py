@@ -132,3 +132,13 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',    #causes verbose duplicate notifications in django 1.9
 )
+
+
+
+## EMAIL ##
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = "abakaffenotifier@gmail.com"
+EMAIL_HOST_PASSWORD = "nynoregpassord1337"
+EMAIL_PORT = 587

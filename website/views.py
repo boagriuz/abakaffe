@@ -4,11 +4,8 @@ from highscores.views import get_monthly_alltime, get_statistics
 from .models import Subscribe
 from .forms import NameForm
 import smtplib
-from email import encoders
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email.mime.text import MIMEText
-import os, calendar, time
+import calendar, time
+from django.core.mail import send_mail
 
 
 def index(request, template="website/index.html"):
@@ -30,6 +27,7 @@ def about(request, template="website/about.html"):
 
 
 error_msg = None
+
 
 def subscribe(request):
     # if POST request
@@ -54,12 +52,12 @@ def subscribe(request):
             sub_obj.save()
 
             # Send the user a notify mail =)
-            try:
-                mail(studmail)
 
-                error_msg = None
+            send_a_mail(studmail)
 
-                context = {
+            error_msg = None
+
+            context = {
                     'form': form,
                     'error_msg': error_msg,
                     'WEIGHT': Weight.objects.get(key=1).weight,
@@ -67,11 +65,7 @@ def subscribe(request):
 
                 }
 
-                return HttpResponseRedirect("/subscribe/", context)
-
-            except smtplib.SMTPException as e:
-
-                error_msg = " - Failed to send notify email (Empty email field?)"
+            return HttpResponseRedirect("/subscribe/", context)
 
         else:
 
@@ -99,20 +93,14 @@ def subscribe(request):
 
 
 ### EMAIL SECTION HERE ####
+### see settings for email stuff ###
 
 
-gmail_user = "abakaffenotifier@gmail.com"
-gmail_pwd = "nynoregpassord1337"
-
-
-def mail(to, attach=None):
-
+def send_a_mail(email_receiver):
     global error_msg
-    # static things
-    subject = "Abakaffe Subcribe :)"
 
-    # text = "Thank you for subscribing to Abakaffe =)\n\n You will be notified when fresh good coffe is ready. \n\nBest regards, \n"
-    html = """\
+    subject = "Abakaffe Subcribe :)"
+    html_msg = """\
             <html>
             <meta charset="ISO-8859-1">
             <head></head>
@@ -142,35 +130,12 @@ def mail(to, attach=None):
             </html>
          """
 
-    #
-    msg = MIMEMultipart()
-    msg['From'] = gmail_user
-    msg['To'] = to
-    msg['Subject'] = subject
 
-    # part1 = MIMEText(text, 'plain')
-    part2 = MIMEText(html, 'html')
-
-    # msg.attach(part1)
-    msg.attach(part2)
     try:
-        if attach:
-            part = MIMEBase('application', 'octet-stream')
-            part.set_payload(open(attach, 'rb').read())
-            encoders.encode_base64(part)
-            part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(attach))
-            msg.attach(part)
-        mailServer = smtplib.SMTP("smtp.gmail.com", 587)
-        mailServer.ehlo()
-        mailServer.starttls()
-        mailServer.ehlo()
-        mailServer.login(gmail_user, gmail_pwd)
-        mailServer.sendmail(gmail_user, to, msg.as_string())
-        mailServer.close()
 
+        send_mail(subject, message="", html_message=html_msg, from_email="abakaffenotifier@gmail.com", recipient_list=[email_receiver],
+                  fail_silently=False)
 
-    except smtplib.SMTPConnectError as conn:
-        error_msg = "An email connection error occured"
+    except smtplib.SMTPException as e:
 
-    except smtplib.SMTPAuthenticationError as auth:
-        error_msg = "An email authentication error occured"
+        error_msg = "Failed to send email"
