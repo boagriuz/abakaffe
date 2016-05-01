@@ -19,6 +19,9 @@ class NameForm(forms.Form):
 
         studmail = self.cleaned_data.get('studmail')
 
+        if studmail == "":
+            return False
+
         if re.match("^[A-Za-z]*$", studmail):
             return True
         else:
