@@ -1,15 +1,14 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect
 from update.models import Weight
 from highscores.views import get_monthly_alltime, get_statistics
 from .models import Subscribe
-from datetime import datetime
 from .forms import NameForm
 import smtplib
 from email import encoders
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
-import os
+import os, calendar, time
 
 
 def index(request, template="website/index.html"):
@@ -40,17 +39,10 @@ def subscribe(request):
         # check if valid
         if form.is_valid():
             # create timestamp
-            now = datetime.now()
-
             # set db fields # process form.cleaned_data
 
             studmail = form.cleaned_data['studmail'] + "@stud.ntnu.no"
-            hours = now.hour
-            minutes = now.minute
-            seconds = now.second
-
-            #seconds
-            created = (hours * 3600) + (minutes * 60) + seconds
+            created = calendar.timegm(time.gmtime())
 
             # save to database
             sub_obj = Subscribe(studmail=studmail, created=created)
