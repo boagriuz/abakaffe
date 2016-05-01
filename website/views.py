@@ -6,6 +6,7 @@ from .forms import NameForm
 import smtplib
 import calendar, time
 from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 
 
 def index(request, template="website/index.html"):
@@ -53,17 +54,17 @@ def subscribe(request):
 
             # Send the user a notify mail =)
 
-            send_a_mail(studmail)
+            sendMail(studmail)
 
             error_msg = None
 
             context = {
-                    'form': form,
-                    'error_msg': error_msg,
-                    'WEIGHT': Weight.objects.get(key=1).weight,
-                    'STATISTICS': stat,
+                'form': form,
+                'error_msg': error_msg,
+                'WEIGHT': Weight.objects.get(key=1).weight,
+                'STATISTICS': stat,
 
-                }
+            }
 
             return HttpResponseRedirect("/subscribe/", context)
 
@@ -131,12 +132,60 @@ def send_a_mail(email_receiver):
             </html>
          """
 
-
     try:
 
-        send_mail(subject, message="", html_message=html_msg, from_email="abakaffenotifier@gmail.com", recipient_list=[email_receiver],
+        send_mail(subject, message="", html_message=html_msg, from_email="abakaffenotifier@gmail.com",
+                  recipient_list=[email_receiver],
                   fail_silently=False)
 
     except smtplib.SMTPException as e:
 
+        error_msg = "Failed to send email"
+
+
+def sendMail(email_reciever):
+    # if "to" is not a list of e-mails but a string
+    # it will be converted to a single item list
+    global error_msg
+    subject = "Abakaffe Subcribe :)"
+    html_msg = """\
+            <html>
+            <meta charset="ISO-8859-1">
+            <head></head>
+            <body>
+            <p>Hi!<br>
+            Thank you for subscribing to Abakaffe =)<br>
+            You will be notified when fresh coffee is ready.<br>
+            Your welcome to <a href="http://abakaffe.today">visit our page</a> at any time! :)
+
+            </p>
+            <p>Peace and Love, <br> </p>
+            <br>
+            <pre>
+
+              ,,                                        ,...  ,...
+      db     *MM                 `7MM                 .d' "".d' ""
+     ;MM:     MM                   MM                 dM`   dM`
+    ,V^MM.    MM,dMMb.   ,6"Yb.    MM  ,MP' ,6"Yb.   mMMmm mMMmm.gP"Ya
+   ,M  `MM    MM    `Mb 8)   MM    MM ;Y   8)   MM    MM    MM ,M'   Yb
+   AbmmmqMA   MM     M8  ,pm9MM    MM;Mm    ,pm9MM    MM    MM 8M******
+  A'     VML  MM.   ,M9 8M   MM    MM `Mb. 8M   MM    MM    MM YM.    ,
+.AMA.   .AMMA.P^YbmdP'  `Moo9^Yo..JMML. YA.`Moo9^Yo..JMML..JMML.`Mbmmd'
+
+
+            </pre>
+            </body>
+            </html>
+         """
+
+    try:
+
+        if not isinstance(email_reciever, list):
+            email_reciever = email_reciever.strip().split()
+
+        email = EmailMessage(subject, html_msg, "abakaffenotifier@gmail.com", email_reciever)
+        email.content_subtype = "html"
+        email.send()
+
+    except smtplib.SMTPException as e:
         error_msg = "Failed to send email"
