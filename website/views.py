@@ -109,11 +109,19 @@ def mail(to, attach=None):
             </p>
             <p>Best regards, <br> </p>
             <br>
-            <p>
-                ABAKAFFE
+            <pre>
 
-            <br>
-            </p>
+              ,,                                        ,...  ,...
+      db     *MM                 `7MM                 .d' "".d' ""
+     ;MM:     MM                   MM                 dM`   dM`
+    ,V^MM.    MM,dMMb.   ,6"Yb.    MM  ,MP' ,6"Yb.   mMMmm mMMmm.gP"Ya
+   ,M  `MM    MM    `Mb 8)   MM    MM ;Y   8)   MM    MM    MM ,M'   Yb
+   AbmmmqMA   MM     M8  ,pm9MM    MM;Mm    ,pm9MM    MM    MM 8M""""""
+  A'     VML  MM.   ,M9 8M   MM    MM `Mb. 8M   MM    MM    MM YM.    ,
+.AMA.   .AMMA.P^YbmdP'  `Moo9^Yo..JMML. YA.`Moo9^Yo..JMML..JMML.`Mbmmd'
+
+
+            </pre>
             </body>
             </html>
          """
