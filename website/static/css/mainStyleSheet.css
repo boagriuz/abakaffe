@@ -1,6 +1,7 @@
 body, html {
     white-space: nowrap;
     height: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -40,7 +41,7 @@ body {
 
 .wide {
     white-space: nowrap;
-    width: 100%;
+    width: 101%;
     height: calc(20% - 1px);
     background-image: url('https://ahavahcoffeeco.files.wordpress.com/2015/05/cropped-coffee_header_fade.png');
     background-size: cover;

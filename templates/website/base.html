@@ -6,16 +6,16 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Abakaffe</title>
-
+    <!-- JavaScript -->
     <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
     <script src="{% static "js/liquidFillGauge.js" %}" language="JavaScript"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static "css/mainStyleSheet.css" %}">
 
 </head>
@@ -44,6 +44,7 @@
     });
 
 </script>
+
 <div class="wide">
     <div class="col-xs-5 line"></div>
     <div class="col-xs-2 logo">Abakaffe</div>
@@ -51,27 +52,40 @@
 
 </div>
 
-<div id="subscribe">
+
+{% block subscribe %}
+
+    <div id="subscribe">
     <nav class="navbar navbar-default">
         <p class="navbar-text">Get notified when the coffee is ready</p>
-​
-        <form class="navbar-form navbar-left" action="/" method="post">
+        ​
+        <form class="navbar-form navbar-left" action="/subscribe/" method="post">
             {% csrf_token %}
+              {{ form }}
+
             <div class="input-group" id="input_group">
-              {{ form.studmail.errors }}
-                <input id="{{ form.studmail.id_for_label }}" class="form-control" name="studmail" type="text" placeholder="ntnu-username" maxlength="{{ form.studmail.maxlength }}" value="{{ form.studmail.value }}" size="35">
+
+                  <input id="{{ form.studmail.id_for_label }}" class="form-control" name="studmail" type="text"
+                       placeholder="ntnu-username" maxlength="{{ form.studmail.maxlength }}"
+                       value="{{ form.studmail.value }}" size="35"
+                       autocomplete="on" />
+
                 <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
             </div>
 
             <input type="submit" value="Subscribe" class="btn btn-default navbar-btn"/>
         </form>
-​
+        ​
 
     </nav>
 </div>
 
-    {% block content %}
-    {% endblock content %}
+{% endblock subscribe%}
 
+{% block content %}
+{% endblock content %}
+
+{% block messages %}
+{% endblock messages %}
 </body>
 </html>
