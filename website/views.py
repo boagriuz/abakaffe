@@ -67,6 +67,7 @@ def subscribe(request):
 
             return HttpResponseRedirect("/subscribe/", context)
 
+
         else:
 
             error_msg = ' - Form is invalid'

@@ -137,8 +137,15 @@ STATICFILES_FINDERS = (
 
 ## EMAIL ##
 
+ADMINS = [('Alex', 'alex.h.bakken@gmail.com'),]
+MANAGERS = ADMINS
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = "abakaffenotifier@gmail.com"
 EMAIL_HOST_PASSWORD = "nynoregpassord1337"
 EMAIL_PORT = 587
+SERVER_EMAIL = "alex.h.bakken@gmail.com"
