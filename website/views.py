@@ -32,14 +32,16 @@ def about(request, template="website/about.html"):
 def subscribe(request):
     # if POST request
     error_msg = None
+    stat = get_statistics()
 
     if request.method == 'POST':
         form = NameForm(request.POST)
 
         # check if valid
-        if form.is_valid():
+        if form.is_valid() and form.form_contains_letters():
             # create timestamp
             # set db fields # process form.cleaned_data
+
 
             studmail = form.cleaned_data['studmail'] + "@stud.ntnu.no"
             created = calendar.timegm(time.gmtime())
@@ -54,6 +56,8 @@ def subscribe(request):
                 context = {
                     'form': form,
                     'error_msg': error_msg,
+                    'WEIGHT': Weight.objects.get(key=1).weight,
+                    'STATISTICS': stat,
 
                 }
 
@@ -61,11 +65,11 @@ def subscribe(request):
 
             except smtplib.SMTPException as e:
 
-                error_msg = "Failed to send notify email: ", e
+                error_msg = " - Failed to send notify email (Empty email field?)"
 
         else:
 
-            error_msg = 'Form is invalid'
+            error_msg = ' - Form is invalid'
 
             # redirect to new site
 
@@ -78,10 +82,12 @@ def subscribe(request):
 
         'form': form,
         'error_msg': error_msg,
+        'WEIGHT': Weight.objects.get(key=1).weight,
+        'STATISTICS': stat,
 
     }
 
-    return render(request, "website/index.html", context)
+    return render(request, "website/subscribe.html", context)
 
     # forms.py => views => models.py => db.sqlite3
 
@@ -105,7 +111,7 @@ def mail(to, attach=None):
             <body>
             <p>Hi!<br>
             Thank you for subscribing to Abakaffe =)<br>
-            You will be notified when fresh good coffee is ready.
+            You will be notified when fresh good coffee is ready.<br>
             Your welcome to <a href="http://abakaffe.today">visit our page</a> at any time! :)
 
             </p>
@@ -118,7 +124,7 @@ def mail(to, attach=None):
      ;MM:     MM                   MM                 dM`   dM`
     ,V^MM.    MM,dMMb.   ,6"Yb.    MM  ,MP' ,6"Yb.   mMMmm mMMmm.gP"Ya
    ,M  `MM    MM    `Mb 8)   MM    MM ;Y   8)   MM    MM    MM ,M'   Yb
-   AbmmmqMA   MM     M8  ,pm9MM    MM;Mm    ,pm9MM    MM    MM 8M""""""
+   AbmmmqMA   MM     M8  ,pm9MM    MM;Mm    ,pm9MM    MM    MM 8M******
   A'     VML  MM.   ,M9 8M   MM    MM `Mb. 8M   MM    MM    MM YM.    ,
 .AMA.   .AMMA.P^YbmdP'  `Moo9^Yo..JMML. YA.`Moo9^Yo..JMML..JMML.`Mbmmd'
 
