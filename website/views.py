@@ -29,9 +29,12 @@ def about(request, template="website/about.html"):
     return render(request, template)
 
 
+error_msg = None
+
 def subscribe(request):
     # if POST request
-    error_msg = None
+    global error_msg
+
     stat = get_statistics()
 
     if request.method == 'POST':
@@ -53,6 +56,9 @@ def subscribe(request):
             # Send the user a notify mail =)
             try:
                 mail(studmail)
+
+                error_msg = None
+
                 context = {
                     'form': form,
                     'error_msg': error_msg,
@@ -100,6 +106,8 @@ gmail_pwd = "nynoregpassord1337"
 
 
 def mail(to, attach=None):
+
+    global error_msg
     # static things
     subject = "Abakaffe Subcribe :)"
 
@@ -159,7 +167,10 @@ def mail(to, attach=None):
         mailServer.login(gmail_user, gmail_pwd)
         mailServer.sendmail(gmail_user, to, msg.as_string())
         mailServer.close()
+
+
     except smtplib.SMTPConnectError as conn:
-        print("An email connection error: ", conn)
+        error_msg = "An email connection error occured"
+
     except smtplib.SMTPAuthenticationError as auth:
-        print("An email auth error: ", auth)
+        error_msg = "An email authentication error occured"
