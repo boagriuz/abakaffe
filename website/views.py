@@ -100,14 +100,16 @@ def mail(to, attach=None):
     # text = "Thank you for subscribing to Abakaffe =)\n\n You will be notified when fresh good coffe is ready. \n\nBest regards, \n"
     html = """\
             <html>
+            <meta charset="ISO-8859-1">
             <head></head>
             <body>
             <p>Hi!<br>
             Thank you for subscribing to Abakaffe =)<br>
-            You will be notified when fresh good coffe is ready.
-            Here is the <a href="http://abakaffe.today">link</a> you wanted.
+            You will be notified when fresh good coffee is ready.
+            Your welcome to <a href="http://abakaffe.today">visit our page</a> at any time! :)
+
             </p>
-            <p>Best regards, <br> </p>
+            <p>Peace and Love, <br> </p>
             <br>
             <pre>
 
