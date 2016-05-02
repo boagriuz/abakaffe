@@ -134,10 +134,8 @@ function resetTimeout() {
         <strong><font id="error" size="5" color="maroon">Woops! Something went wrong :/</font></strong>
         <br/>
         <strong><font id="error" size="4" color="maroon">{{ error_msg }}</font></strong>
-
-    {% endif %}
-
-    {% if not error_msg %}
+        <!-- <p>{{  form.studmail.value }}</p> -->
+    {% else %}
 
        <strong> <font size="5" id="success" color="#006400">Congratulations, you have subscribed!</font></strong>
 
