@@ -5,12 +5,11 @@ from .models import Subscribe
 from .forms import NameForm
 import smtplib
 import calendar, time
-from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 
 
 def index(request, template="website/index.html"):
-    subscribe(request)
+
     stat = get_statistics()
     context = {'WEIGHT': Weight.objects.get(key=1).weight, 'STATISTICS': stat}
     return render(request, template, context)
@@ -27,13 +26,13 @@ def about(request, template="website/about.html"):
     return render(request, template)
 
 
-error_msg = None
+
 
 def subscribe(request):
     # if POST request
-    global error_msg
-    stat = get_statistics()
 
+    stat = get_statistics()
+    error_msg = None
     if request.method == 'POST':
         form = NameForm(request.POST)
         if form.is_valid():
@@ -49,15 +48,8 @@ def subscribe(request):
 
                     # Send the user a notify mail =)
                     sendMail(studmail)
-                    error_msg = None
-                    context = {
-                        'form': form,
-                        'error_msg': error_msg,
-                        'WEIGHT': Weight.objects.get(key=1).weight,
-                        'STATISTICS': stat,
-                    }
 
-                    return HttpResponseRedirect("/subscribe/", context)
+                    return HttpResponseRedirect("/subscribe/")
 
                 else:
                     error_msg = "- Username can only contain letters [a-zA-Z]"
