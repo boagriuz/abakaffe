@@ -26,13 +26,6 @@ def about(request, template="website/about.html"):
     return render(request, template)
 
 
-
-def subscribe(request):
-    # if POST request
-    error_msg = None
-    stat = get_statistics()
-
-
 def subscribe(request):
     # if POST request
 
@@ -129,11 +122,11 @@ def sendMail(email_receiver, content=None):
 
 
 def sendTemplate(subject, content, subtype,receiver):
-    global error_msg
+
     if not isinstance(receiver, list):
         receiver = receiver.strip().split()
     try:
-        email = EmailMessage(subject, content, "abakaffenotifier@gmail.com", receiver, fail_silently=False)
+        email = EmailMessage(subject, content, "abakaffenotifier@gmail.com", receiver)
         email.content_subtype = subtype
         email.send()
     except smtplib.SMTPException as e:
