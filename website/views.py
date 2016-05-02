@@ -33,69 +33,62 @@ error_msg = None
 def subscribe(request):
     # if POST request
     global error_msg
-
     stat = get_statistics()
 
     if request.method == 'POST':
         form = NameForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data['studmail'] != '':
+                if form.form_contains_letters():
 
-        # check if valid
-        if form.is_valid() and form.form_contains_letters():
-            # create timestamp
-            # set db fields # process form.cleaned_data
+                    studmail = form.cleaned_data['studmail'] + "@stud.ntnu.no"
+                    created = calendar.timegm(time.gmtime())
 
+                    # save to database
+                    sub_obj = Subscribe(studmail=studmail, created=created)
+                    sub_obj.save()
 
-            studmail = form.cleaned_data['studmail'] + "@stud.ntnu.no"
-            created = calendar.timegm(time.gmtime())
+                    # Send the user a notify mail =)
+                    sendMail(studmail)
 
-            # save to database
-            sub_obj = Subscribe(studmail=studmail, created=created)
-            sub_obj.save()
+                    context = {
+                        'form': form,
+                        'error_msg': error_msg,
+                        'WEIGHT': Weight.objects.get(key=1).weight,
+                        'STATISTICS': stat,
+                    }
 
-            # Send the user a notify mail =)
+                    return HttpResponseRedirect("/subscribe/", context)
 
-            sendMail(studmail)
-
-            error_msg = None
-
-            context = {
-                'form': form,
-                'error_msg': error_msg,
-                'WEIGHT': Weight.objects.get(key=1).weight,
-                'STATISTICS': stat,
-
-            }
-
-            return HttpResponseRedirect("/subscribe/", context)
-
-
+                else:
+                    error_msg = "- Username can only contain letters [a-zA-Z]"
+            else:
+                error_msg = "- Username cannot be empty"
         else:
-
-            error_msg = ' - Form is invalid'
-
-            # redirect to new site
-
-    # if GET request
+            error_msg = '- Form data is invalid'
     else:
 
         form = NameForm()
 
+
+    # if GET request
     context = {
 
-        'form': form,
-        'error_msg': error_msg,
-        'WEIGHT': Weight.objects.get(key=1).weight,
-        'STATISTICS': stat,
+            'form': form,
+            'error_msg': error_msg,
+            'WEIGHT': Weight.objects.get(key=1).weight,
+            'STATISTICS': stat,
 
-    }
+        }
 
     return render(request, "website/subscribe.html", context)
 
-    # forms.py => views => models.py => db.sqlite3
 
 
-### EMAIL SECTION HERE ####
 ### see settings for email stuff ###
+
+
+def sendMail(email_reciever, content=None):
 
 
 def send_a_mail(email_receiver):
@@ -192,4 +185,4 @@ def sendTemplate(subject, content, subtype, receiver):
         email.content_subtype = subtype
         email.send()
     except smtplib.SMTPException as e:
-        error_msg = "Failed to send email"
+        error_msg = "- Failed to send email (2)" + str(e)
