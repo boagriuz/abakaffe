@@ -9,9 +9,11 @@ from django.core.mail import EmailMessage
 
 
 def index(request, template="website/index.html"):
-
     stat = get_statistics()
-    context = {'WEIGHT': Weight.objects.get(key=1).weight, 'STATISTICS': stat}
+    context = {
+        'WEIGHT': Weight.objects.get(key=1).weight,
+        'STATISTICS': stat
+    }
     return render(request, template, context)
 
 
