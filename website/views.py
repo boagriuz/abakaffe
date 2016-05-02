@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, redirect
 from update.models import Weight
 from highscores.views import get_monthly_alltime, get_statistics
 from .models import Subscribe
@@ -10,7 +10,7 @@ from django.core.mail import EmailMessage
 
 
 def index(request, template="website/index.html"):
-    subscribe(request)
+
     stat = get_statistics()
     context = {'WEIGHT': Weight.objects.get(key=1).weight, 'STATISTICS': stat}
     return render(request, template, context)
@@ -27,11 +27,12 @@ def about(request, template="website/about.html"):
     return render(request, template)
 
 
-error_msg = None
+
+
 
 def subscribe(request):
     # if POST request
-    global error_msg
+    error_msg = None
     stat = get_statistics()
 
     if request.method == 'POST':
@@ -39,6 +40,7 @@ def subscribe(request):
         if form.is_valid():
             if form.cleaned_data['studmail'] != '':
                 if form.form_contains_letters():
+
 
                     studmail = form.cleaned_data['studmail'] + "@stud.ntnu.no"
                     created = calendar.timegm(time.gmtime())
@@ -49,27 +51,22 @@ def subscribe(request):
 
                     # Send the user a notify mail =)
                     sendMail(studmail)
-                    error_msg = None
-                    context = {
-                        'form': form,
-                        'error_msg': error_msg,
-                        'WEIGHT': Weight.objects.get(key=1).weight,
-                        'STATISTICS': stat,
-                    }
 
-                    return HttpResponseRedirect("/subscribe/", context)
+                    return redirect("/subscribe/")
 
                 else:
                     error_msg = "- Username can only contain letters [a-zA-Z]"
             else:
-                error_msg = "- Username cannot be empty"
+                error_msg = "nothing"
         else:
-            error_msg = '- Form data is invalid'
+            error_msg = "- Form data is invalid"
     else:
 
         form = NameForm()
 
     # if GET request
+
+
     context = {
 
         'form': form,
@@ -135,4 +132,4 @@ def sendTemplate(subject, content, subtype, receiver):
         email.content_subtype = subtype
         email.send()
     except smtplib.SMTPException as e:
-        print(e)
+        print("Email ERROR:", e)
