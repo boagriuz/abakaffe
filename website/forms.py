@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
 import re
 
 
@@ -11,17 +10,9 @@ class NameForm(forms.Form):
                'maxlength': "{{ form.studmail.maxlength }}", 'size': "35",
                'autocomplete': "on"}))
 
-    class Meta:
-        model = User
-        fields = ('studmail',)
-
-
     def form_contains_letters(self):
 
         studmail = self.cleaned_data.get('studmail')
-
-        if studmail == "":
-            return False
 
         if re.match("^[A-Za-z]*$", studmail):
             return True
