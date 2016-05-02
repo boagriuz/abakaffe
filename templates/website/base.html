@@ -88,9 +88,10 @@
 
                 <div class="input-group" id="input_group">
 
-                    <input id="{{ form.studmail.id_for_label }}" class="form-control" name="studmail" type="text"
-                           placeholder="ntnu-username" maxlength="{{ form.studmail.maxlength }}" size="35"
-                           autocomplete="on"/>
+                  <input id="{{ form.studmail.id_for_label }}" class="form-control" name="studmail" type="text"
+                       placeholder="NTNU-username" maxlength="{{ form.studmail.maxlength }}"
+                       value="{{ form.studmail.value }}" size="35"
+                       autocomplete="on" />
 
                     <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
                 </div>

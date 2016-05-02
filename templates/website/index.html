@@ -22,14 +22,16 @@
                 function NewValue() {
 
                     var maxWeight = 4202; //grams
+                    var minWeight = 2146
                     var currentWeight = '{{ WEIGHT }}';
                     
-                    if(maxWeight == 0) return 0;
+                    var corr_maxWeight = maxWeight - minWeight
+                    var corr_currentWeight = currentWeight - minWeight
 
-                    if(currentWeight == 0) return 100;
+                    if(corr_currentWeight <= 0) return 0;
 
-                    if (maxWeight >= currentWeight) {
-                        return ((currentWeight / maxWeight) * 100).toFixed(1);
+                    if (corr_maxWeight >= corr_currentWeight) {
+                        return ((corr_currentWeight / corr_maxWeight) * 100).toFixed(1);
 
                     }else return 100;
                 }
