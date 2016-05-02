@@ -22,16 +22,16 @@
                 function NewValue() {
 
                     var maxWeight = 4202; //grams
-                    var minWeight = 2146
+                    var minWeight = 2146;
                     var currentWeight = '{{ WEIGHT }}';
-                    
-                    var corr_maxWeight = maxWeight - minWeight
-                    var corr_currentWeight = currentWeight - minWeight
 
-                    if(corr_currentWeight <= 0) return 0;
 
-                    if (corr_maxWeight >= corr_currentWeight) {
-                        return ((corr_currentWeight / corr_maxWeight) * 100).toFixed(1);
+                    if(currentWeight <= 0){
+                        return 0;
+                    }
+
+                    if (maxWeight >= currentWeight) {
+                        return ((currentWeight / maxWeight) * 100).toFixed(1);
 
                     }else return 100;
                 }
@@ -59,12 +59,12 @@ function resetTimeout() {
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
     var stdColor = "SaddleBrown";
-    
+
     //number of brews per day
     var stat = "{{ STATISTICS|safe }}";
     stat = stat.replace(/[^a-zA-Z0-9,]/g, "");
     stat = stat.split(",");
-  
+
 
     var data = google.visualization.arrayToDataTable([
         ["Day", "Brews", { role: "style" } ],
@@ -93,7 +93,7 @@ function resetTimeout() {
       legend: { position: "none" },
     };
     var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
-      
+
     chart.draw(view, options);
 }
 </script>
