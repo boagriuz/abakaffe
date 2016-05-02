@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, redirect
 from update.models import Weight
 from highscores.views import get_monthly_alltime, get_statistics
 from .models import Subscribe
@@ -27,9 +27,15 @@ def about(request, template="website/about.html"):
 
 
 
+def subscribe(request):
+    # if POST request
+    error_msg = None
+    stat = get_statistics()
+
 
 def subscribe(request):
     # if POST request
+
 
     stat = get_statistics()
     error_msg = None
@@ -38,7 +44,6 @@ def subscribe(request):
         if form.is_valid():
             if form.cleaned_data['studmail'] != '':
                 if form.form_contains_letters():
-
                     studmail = form.cleaned_data['studmail'] + "@stud.ntnu.no"
                     created = calendar.timegm(time.gmtime())
 
@@ -49,19 +54,22 @@ def subscribe(request):
                     # Send the user a notify mail =)
                     sendMail(studmail)
 
-                    return HttpResponseRedirect("/subscribe/")
+
+                    return redirect("/subscribe/")
 
                 else:
                     error_msg = "- Username can only contain letters [a-zA-Z]"
             else:
-                error_msg = "- Username cannot be empty"
+                error_msg = "nothing"
         else:
-            error_msg = '- Form data is invalid'
+            error_msg = "- Form data is invalid"
     else:
 
         form = NameForm()
 
     # if GET request
+
+
     context = {
 
         'form': form,
@@ -81,8 +89,10 @@ def sendMail(email_receiver, content=None):
     # it will be converted to a single item list
 
     if content:
-        subject = "Coffee is ready"
-        sendTemplate(subject, content, "text", email_receiver)
+        subject = "Coffee is ready :)"
+        subtype = "text"
+        message = content
+        sendTemplate(subject, message, subtype, email_receiver)
 
     else:
         subject = "Abakaffe Subcribe :)"
@@ -118,13 +128,13 @@ def sendMail(email_receiver, content=None):
         sendTemplate(subject, html_msg, "html", email_receiver)
 
 
-def sendTemplate(subject, content, subtype, receiver):
+def sendTemplate(subject, content, subtype,receiver):
     global error_msg
     if not isinstance(receiver, list):
         receiver = receiver.strip().split()
     try:
-        email = EmailMessage(subject, content, "abakaffenotifier@gmail.com", receiver)
+        email = EmailMessage(subject, content, "abakaffenotifier@gmail.com", receiver, fail_silently=False)
         email.content_subtype = subtype
         email.send()
     except smtplib.SMTPException as e:
-        print(e)
+        print("Email ERROR:", e)

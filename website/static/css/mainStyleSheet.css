@@ -65,6 +65,10 @@ body {
     margin-left: 400px;
   }
 
+#abaHeader{
+    margin-left: 500px;
+  }
+
 .line {
     padding-top: 20px;
     white-space: nowrap;
