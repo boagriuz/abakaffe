@@ -5,7 +5,8 @@ from django.utils import timezone
 from .models import CoffeeBrewer
 from .models import Weight
 from highscores.models import Brews
-
+from website.models import Subscribe
+from website.views import sendMail
 
 @csrf_exempt
 def brewer_post(request):
@@ -19,8 +20,10 @@ def brewer_post(request):
         if temp_weight:
             create_weight_object(temp_weight)
         elif brew:
-            # Adds a new Brew ot database
+            # Adds a new Brew to database
             add_brew(ID)
+            entity = CoffeeBrewer.objects.get(RFID = ID)
+            notify_now(entity.name)
         elif name:
             # Adds a new CoffeeBrewer to database if ID doesn't already exist
             add_brewer(request.POST)
@@ -35,6 +38,11 @@ def brewer_post(request):
             return response
     return response
 
+def notify_now(user):
+    content = user + " has now registered a brew. \nIf this person is honest; your coffee is now ready."
+    all_subscribers = Subscribe.objects.all()
+    for subscriber in all_subscribers:
+        sendMail(subscriber.studmail, content)
 
 def create_weight_object(temp_weight):
     print(temp_weight)

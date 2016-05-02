@@ -143,12 +143,17 @@ def send_a_mail(email_receiver):
         error_msg = "Failed to send email"
 
 
-def sendMail(email_reciever):
+def sendMail(email_receiver, content=None):
     # if "to" is not a list of e-mails but a string
     # it will be converted to a single item list
     global error_msg
-    subject = "Abakaffe Subcribe :)"
-    html_msg = """\
+    if content:
+        subject = "Coffee is ready"
+        sendTemplate(subject, content, "text", email_receiver)
+        
+    else: 
+        subject = "Abakaffe Subcribe :)"
+        html_msg = """\
             <html>
             <meta charset="ISO-8859-1">
             <head></head>
@@ -176,16 +181,15 @@ def sendMail(email_reciever):
             </pre>
             </body>
             </html>
-         """
+        """
+        sendTemplate(subject, html_msg, "html", email_receiver)
 
+def sendTemplate(subject, content, subtype, receiver):
+    if not isinstance(receiver, list):
+        receiver = receiver.strip().split()
     try:
-
-        if not isinstance(email_reciever, list):
-            email_reciever = email_reciever.strip().split()
-
-        email = EmailMessage(subject, html_msg, "abakaffenotifier@gmail.com", email_reciever)
-        email.content_subtype = "html"
+        email = EmailMessage(subject, content, "abakaffenotifier@gmail.com", receiver)
+        email.content_subtype = subtype
         email.send()
-
     except smtplib.SMTPException as e:
         error_msg = "Failed to send email"
