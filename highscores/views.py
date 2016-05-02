@@ -10,8 +10,10 @@ days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sun
 
 
 def get_monthly_alltime():
+
     monthly = get_monthly_highscore()
     alltime = get_alltime_highscore()
+ 
     return monthly, alltime
 
 
@@ -51,7 +53,7 @@ def get_alltime_highscore():
 def get_scores(queryset):
     scores = {}
     for entry in queryset:
-        name = entry.RFID.name
+        name = entry.RFID.name.encode('ascii','ignore')
         if name in scores.keys():
             scores[name] += 1
         else:
