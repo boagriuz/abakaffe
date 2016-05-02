@@ -6,22 +6,39 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Abakaffe</title>
+    <!-- google analytics -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
+        ga('create', 'UA-77180880-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
 
     <!-- Main JavaScript -->
     <script src="{% static "js/mainProjectJavaScripts.js" %}" language="JavaScript"></script>
     <!-- Main CSS -->
-     <link rel="stylesheet" type="text/css" href="{% static "css/mainStyleSheet.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/mainStyleSheet.css" %}">
 
     <!--<script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>-->
     <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
     <!-- jQuery library -->
-   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> -->
     <!-- Latest compiled JavaScript -->
     <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
     <!-- Latest compiled and minified CSS -->
 
-   <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
 
 
 </head>
@@ -62,36 +79,39 @@
 {% block subscribe %}
 
     <div id="subscribe">
-    <nav class="navbar navbar-default">
-        <p class="navbar-text">Get notified when the coffee is ready</p>
-        ​
-        <form class="navbar-form navbar-left" action="/subscribe/" method="post">
-            {% csrf_token %}
-              {{ form }}
+        <nav class="navbar navbar-default">
+            <p class="navbar-text">Get notified when the coffee is ready</p>
+            ​
+            <form class="navbar-form navbar-left" action="/subscribe/" method="post">
+                {% csrf_token %}
+                {{ form }}
 
-            <div class="input-group" id="input_group">
+                <div class="input-group" id="input_group">
 
                   <input id="{{ form.studmail.id_for_label }}" class="form-control" name="studmail" type="text"
-                       placeholder="ntnu-username" maxlength="{{ form.studmail.maxlength }}"
+                       placeholder="NTNU-username" maxlength="{{ form.studmail.maxlength }}"
                        value="{{ form.studmail.value }}" size="35"
                        autocomplete="on" />
 
-                <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
-            </div>
+                    <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
+                </div>
 
-            <input type="submit" value="Subscribe" class="btn btn-default navbar-btn"/>
-        </form>
-        ​
+                <input type="submit" value="Subscribe" class="btn btn-default navbar-btn"/>
+            </form>
+            ​
 
-    </nav>
-</div>
+        </nav>
+    </div>
 
-{% endblock subscribe%}
+{% endblock subscribe %}
 
 {% block content %}
 {% endblock content %}
 
 {% block messages %}
 {% endblock messages %}
+
+{% block reload %}
+{% endblock reload %}
 </body>
 </html>

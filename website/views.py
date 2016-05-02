@@ -5,7 +5,6 @@ from .models import Subscribe
 from .forms import NameForm
 import smtplib
 import calendar, time
-from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 
 
@@ -28,20 +27,23 @@ def about(request, template="website/about.html"):
 
 
 
-
-
 def subscribe(request):
     # if POST request
     error_msg = None
     stat = get_statistics()
 
+
+def subscribe(request):
+    # if POST request
+
+
+    stat = get_statistics()
+    error_msg = None
     if request.method == 'POST':
         form = NameForm(request.POST)
         if form.is_valid():
             if form.cleaned_data['studmail'] != '':
                 if form.form_contains_letters():
-
-
                     studmail = form.cleaned_data['studmail'] + "@stud.ntnu.no"
                     created = calendar.timegm(time.gmtime())
 
@@ -51,6 +53,7 @@ def subscribe(request):
 
                     # Send the user a notify mail =)
                     sendMail(studmail)
+
 
                     return redirect("/subscribe/")
 
@@ -86,8 +89,10 @@ def sendMail(email_receiver, content=None):
     # it will be converted to a single item list
 
     if content:
-        subject = "Coffee is ready"
-        sendTemplate(subject, content, "text", email_receiver)
+        subject = "Coffee is ready :)"
+        subtype = "text"
+        message = content
+        sendTemplate(subject, message, subtype, email_receiver)
 
     else:
         subject = "Abakaffe Subcribe :)"
@@ -123,12 +128,12 @@ def sendMail(email_receiver, content=None):
         sendTemplate(subject, html_msg, "html", email_receiver)
 
 
-def sendTemplate(subject, content, subtype, receiver):
+def sendTemplate(subject, content, subtype,receiver):
     global error_msg
     if not isinstance(receiver, list):
         receiver = receiver.strip().split()
     try:
-        email = EmailMessage(subject, content, "abakaffenotifier@gmail.com", receiver)
+        email = EmailMessage(subject, content, "abakaffenotifier@gmail.com", receiver, fail_silently=False)
         email.content_subtype = subtype
         email.send()
     except smtplib.SMTPException as e:
