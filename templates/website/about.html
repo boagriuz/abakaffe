@@ -1,31 +1,53 @@
 {% extends "website/base.html" %}
 
 {% block content %}
+    <style type="text/css">
+        ul {
+            list-style: none;
+        }
 
+        ul li:before {
+            content: "";
+        }
+    </style>
     <div class="about_text">
         <h1>About this project</h1>
-        <p style = "width: 200px; word-wrap: break-word; display:inline;">
-           We are a group of 8 people who take the course TTM4115 - Design of Reactive Systems at NTNU, spring 2016. 
-           The people behind this project is: Alexander Bakken,  Anders Lysne, Bjørn Olav Gjørven, Christian Sørseth, 
-           Even Eidsvåg, Hege Krokås Borge, Sahed Abbas and Magnus Berge. 
+        <img src="https://media.giphy.com/media/NJokhR7GCs0uY/giphy.gif" height="150px">
+        <p>
+            We are a group of 8 people who take the course TTM4115 - Design of Reactive Systems at NTNU, spring 2016.
+            <br>
+            The people behind this project is: <br>
 
-           This web page is a part of a semester project where the assignment is to create a reactive system using a 
-           Raspberry Pi and at least two other components.
+        <ul style="text-align: center; ">
+            <li> <strong>Alexander Bakken</strong></li>
+            <li> <strong>Anders Lysne</strong></li>
+            <li> <strong>Bjørn Olav Gjørven</strong></li>
+            <li> <strong>Hege Krokås Borge</strong></li>
+            <li> <strong>Christian Sørseth</strong></li>
+            <li> <strong>Even Eidsvåg</strong></li>
+            <li> <strong>Sahed Abbas</strong></li>
+            <li> <strong>Magnus Berge</strong></li>
+        </ul>
 
-           The purpose of this project is that a student who sits at the study hall should be able to check if there 
-           is coffee in the coffee can without leaving his seat. This is done by having a weight which registers how 
-           much coffee is left int he can. This information is then sent to the webpage.  A student can also 
-           subscribe to being alerted via mail when a new coffee can has been brewed. There is also a highscore-list 
-           over the brewers who has brewed the most.
+        <center>
+        This web page is a part of a semester project where the assignment is to create a reactive system using a
+        Raspberry Pi and at least two other components.<br/>
+        <br/>
+        The purpose of this project is that a student who sits at the study hall should be able to check if there
+        is coffee in the coffee-can without leaving his seat. This is done by having a weight which registers how
+        much coffee is left in the can in percentage.<br> This information is then sent to the webpage. A student can also
+        subscribe to being alerted via mail when a new coffee can has been brewed. Don't worry, you will be unsubscribed automatic after a while(loop).
+        There is also a highscore-list over the brewers <br>who has brewed the most.<br/>
+        </center>
         </p>
-        <img src="https://media.giphy.com/media/NJokhR7GCs0uY/giphy.gif">
+
     </div>
-<script>
-window.onload=function () {
-	$('#about').addClass('active');
-};
-</script>
-	
+    <script>
+        window.onload = function () {
+            $('#about').addClass('active');
+        };
+    </script>
+
 
 
 {% endblock content %}
