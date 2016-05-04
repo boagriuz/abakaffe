@@ -27,16 +27,17 @@ def highscore(request, template="website/highscore.html"):
 def about(request, template="website/about.html"):
     return render(request, template)
 
+
 error_msg = None
 username = None
 count = 0
+
 
 def subscribe(request):
     global error_msg, username, count
 
     # if POST request
     stat = get_statistics()
-
     # count GETs
 
     if request.method == 'POST':
@@ -54,36 +55,40 @@ def subscribe(request):
                     sub_obj = Subscribe(studmail=studmail, created=created)
                     sub_obj.save()
 
-                    #reset GET
+                    # reset GET
                     count = 0
                     error_msg = None
+
 
                     return redirect("/subscribe/")
 
                 else:
+                    count = 0
                     error_msg = "- Username can only contain letters [a-zA-Z]"
             else:
+                count = 0
                 error_msg = "nothing"
         else:
+            count = 0
             error_msg = "- Form data is invalid"
 
-    #form = NameForm()  # if GET request
-    # clear form if only GET request >=2
+        # form = NameForm()  # if GET request
+        # clear msg if only GET request >=2
+    form = NameForm()
     count += 1
     if count >= 2:
         error_msg = "nothing"
 
-    form = NameForm()
+
     context = {
 
-        'form' : form,
-        'username' : username,
-        'error_msg': error_msg,
-        'WEIGHT' : Weight.objects.get(key=1).weight,
-        'STATISTICS' : stat,
+            'form': form,
+            'username': username,
+            'error_msg': error_msg,
+            'WEIGHT': Weight.objects.get(key=1).weight,
+            'STATISTICS': stat,
 
-    }
-
+        }
 
     return render(request, "website/subscribe.html", context)  ### see settings for email stuff ###
 
