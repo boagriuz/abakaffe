@@ -29,7 +29,7 @@ alltime = alltime.split(",");
 
 for(var i=0; i < monthly.length-1; i+=2){
 	j++;
-    listItems.push("<li class='list-group-item'><strong>"+j+"</strong>       " + monthly[i] +' '+"<span class='label label-default label-pill pull-xs-right'>"+ monthly[i+1] +"</span>"+' '+"</li>");
+    listItems.push("<li class='list-group-item'><strong>"+j+"</strong>       " + monthly[i] +' '+"<span class='label label-default label-pill pull-xs-right'>"+ monthly[i+1] +" brews</span>"+' '+"</li>");
 }
 $('#listHighscore').append(listItems.join(' '));
 </script>
