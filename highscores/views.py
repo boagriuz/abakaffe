@@ -1,10 +1,9 @@
-from django.shortcuts import render
+
 from django.utils import timezone
 import datetime
 from .models import Brews
 import operator
-from update.models import CoffeeBrewer
-import json
+
 
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 

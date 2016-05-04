@@ -23,21 +23,28 @@
 
                     function NewValue() {
 
-                        var maxWeight = 4202; //grams
-                        var currentWeight = '{{ WEIGHT }}';
+                        var CoffeeAndScale = 4202; //grams
+                        var OnlyScale = 2146;
+                        var currentCoffeeAndScale = '{{ WEIGHT }}';
 
-                        if (maxWeight <= 0) return 0;
-                        if (currentWeight <= 0) return 0;
+                        if(currentCoffeeAndScale <= 0) return 0;
+                        if(currentCoffeeAndScale >= CoffeeAndScale) return 100;
 
-                        if (maxWeight >= currentWeight) {
-                            return ((currentWeight / maxWeight) * 100).toFixed(1);
+                        var currentOnlyCoffee= currentCoffeeAndScale - OnlyScale;
+                        var currentMaxCoffee = CoffeeAndScale - OnlyScale;
 
-                        } else return 100;
+                        if (maxWeight >= coffeeWeight)
+                        {
+                            return ((currentOnlyCoffee / currentMaxCoffee) * 100).toFixed(1);
+                        }
+                        else
+                        {
+                            return 100;
+                        }
 
                     }
 
             </script>
-            <h3 style="padding-left: 300px;">...Coffee left ( ͡° ͜ʖ ͡°)</h3>
         </div>
         <div id="chart_div" class="col-lg-8"></div>
     </div>
@@ -134,12 +141,13 @@
 {% block messages %}
 
     {% if error_msg != "nothing" and error_msg != None %}
-        <strong><font id="error" size="5" color="maroon">Woops! Something went wrong :/</font></strong>
+        <strong><span id="error" style="font-size: large; color: maroon; ">Woops! Something went wrong :/</span></strong>
         <br/>
-        <strong><font id="error" size="4" color="maroon">{{ error_msg }}</font></strong>
+        <strong><span id="error" style="font-size: medium; color: maroon; ">{{ error_msg }}</span></strong>
 
     {% elif not error_msg %}
-       <strong> <font size="5" id="success" color="#006400">Congratulations, you have subscribed!</font></strong>
+       <strong> <span id="success"
+                      style="font-size: large; color: #006400; ">Congratulations, you have subscribed!</span></strong>
     {% else %}
          <!-- SHOW NOTHING :z-->
     {% endif %}
