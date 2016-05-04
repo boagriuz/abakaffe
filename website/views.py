@@ -27,59 +27,57 @@ def highscore(request, template="website/highscore.html"):
 def about(request, template="website/about.html"):
     return render(request, template)
 
+count = 0
+error_msg = None
+username = None
 
 def subscribe(request):
-    # if POST request
-
-
     stat = get_statistics()
-    error_msg = None
+    global count, error_msg, username
+
     if request.method == 'POST':
         form = NameForm(request.POST)
         if form.is_valid():
-            if form.cleaned_data['studmail'] != '':
-                if form.form_contains_letters():
+            if form.form_contains_letters():
+                if form.cleaned_data['studmail'] != '':
+                    username = form.cleaned_data['studmail']
+
                     studmail = form.cleaned_data['studmail'] + "@stud.ntnu.no"
                     created = calendar.timegm(time.gmtime())
-
+                    sendMail(studmail, "")
                     # save to database
                     sub_obj = Subscribe(studmail=studmail, created=created)
                     sub_obj.save()
 
-                    # Send the user a notify mail =)
-                    sendMail(studmail)
 
+                    #reset GET and error
+                    error_msg = None
 
                     return redirect("/subscribe/")
 
                 else:
-                    error_msg = "- Username can only contain letters [a-zA-Z]"
+                    error_msg = "nothing"
+
             else:
-                error_msg = "nothing"
+                 error_msg = "- Username can only contain letters [a-zA-Z]"
         else:
             error_msg = "- Form data is invalid"
-    else:
 
-        form = NameForm()
-
-    # if GET request
-
+    #form = NameForm()  # if GET request
+    form = NameForm()
 
     context = {
-
-        'form': form,
+        'form' : form,
+        'username' : username,
         'error_msg': error_msg,
-        'WEIGHT': Weight.objects.get(key=1).weight,
-        'STATISTICS': stat,
-
+        'WEIGHT' : Weight.objects.get(key=1).weight,
+        'STATISTICS' : stat,
     }
 
-    return render(request, "website/subscribe.html", context)
+    return render(request, "website/subscribe.html", context)  ### see settings for email stuff ###
 
 
-### see settings for email stuff ###
-
-def sendMail(email_receiver, content=None):
+def sendMail(email_receiver, content):
     # if "to" is not a list of e-mails but a string
     # it will be converted to a single item list
 
@@ -96,7 +94,7 @@ def sendMail(email_receiver, content=None):
             <meta charset="ISO-8859-1">
             <head></head>
             <body>
-            <p>Hi!<br>
+            <p>Hi %s! <br>
             Thank you for subscribing to Abakaffe =)<br>
             You will be notified when fresh coffee is ready.<br>
             Your welcome to <a href="http://abakaffe.today">visit our page</a> at any time! :)
@@ -119,17 +117,21 @@ def sendMail(email_receiver, content=None):
             </pre>
             </body>
             </html>
-        """
+        """ % username
+
+
         sendTemplate(subject, html_msg, "html", email_receiver)
 
 
-def sendTemplate(subject, content, subtype,receiver):
-
+def sendTemplate(subject, content, subtype, receiver):
     if not isinstance(receiver, list):
         receiver = receiver.strip().split()
+
     try:
+
         email = EmailMessage(subject, content, "abakaffenotifier@gmail.com", receiver)
         email.content_subtype = subtype
         email.send()
+
     except smtplib.SMTPException as e:
         print("Email ERROR:", e)
