@@ -1,40 +1,22 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect
-from update.models import Weight
-from highscores.views import get_monthly_alltime, get_statistics
-from .models import Subscribe
-from .forms import NameForm
+import calendar
 import smtplib
-import calendar, time
+import time
+
 from django.core.mail import EmailMessage
+from django.shortcuts import render, redirect, HttpResponseRedirect
 
-
-def index(request, template="website/index.html"):
-    stat = get_statistics()
-    context = {
-        'WEIGHT': Weight.objects.get(key=1).weight,
-        'STATISTICS': stat
-    }
-    return render(request, template, context)
-
-
-def highscore(request, template="website/highscore.html"):
-    monthly, alltime = get_monthly_alltime()
-    stat = get_statistics()
-    context = {'MONTHLY': monthly, 'ALLTIME': alltime, 'STATISTICS': stat}
-    return render(request, template, context)
-
-
-def about(request, template="website/about.html"):
-    return render(request, template)
-
+from highscores.views import get_monthly_alltime, get_statistics
+from .forms import NameForm
+from update.models import Weight
+from .models import Subscribe
 
 error_msg = None
 username = None
 count = 0
+form = None
 
-
-def subscribe(request):
-    global error_msg, username, count
+def index(request, template="website/index.html"):
+    global error_msg, username, count, form
 
     # if POST request
     stat = get_statistics()
@@ -60,7 +42,7 @@ def subscribe(request):
                     error_msg = None
 
 
-                    return redirect("/subscribe/")
+                    return HttpResponseRedirect("/")
 
                 else:
                     count = 0
@@ -73,8 +55,10 @@ def subscribe(request):
             error_msg = "- Form data is invalid"
 
         # form = NameForm()  # if GET request
-        # clear msg if only GET request >=2
-    form = NameForm()
+    else:    # clear msg if only GET request >=2
+        form = NameForm()
+
+
     count += 1
     if count >= 2:
         error_msg = "nothing"
@@ -90,7 +74,18 @@ def subscribe(request):
 
         }
 
-    return render(request, "website/subscribe.html", context)  ### see settings for email stuff ###
+    return render(request, "website/index.html", context)  ### see settings for email stuff ###
+
+
+def highscore(request, template="website/highscore.html"):
+    monthly, alltime = get_monthly_alltime()
+    stat = get_statistics()
+    context = {'MONTHLY': monthly, 'ALLTIME': alltime, 'STATISTICS': stat}
+    return render(request, template, context)
+
+
+def about(request, template="website/about.html"):
+    return render(request, template)
 
 
 def sendMail(email_receiver, content):

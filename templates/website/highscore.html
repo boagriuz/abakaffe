@@ -70,12 +70,13 @@ $('#listHighscore').append(listItems.join(' '));
       width: 1000,
       height: 400,
       bar: {groupWidth: "95%"},
-      legend: { position: "none" },
+      legend: { position: "none" }
     };
     var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
       
     chart.draw(view, options);
 }
 </script>
+
 
 {% endblock content %}

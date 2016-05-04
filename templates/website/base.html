@@ -76,16 +76,28 @@
 </div>
 
 
+
+
+{% block content %}
+
+{% endblock content %}
+
+{% block messages %}
+{% endblock messages %}
+
+{% block reload %}
+{% endblock reload %}
+
+
 {% block subscribe %}
 
     <div id="subscribe">
         <nav class="navbar navbar-default">
             <p class="navbar-text">Get notified when the coffee is ready</p>
             ​
-            <form class="navbar-form navbar-left" action="/subscribe/" method="post">
+            <form class="navbar-form navbar-left" action="/" method="post">
                 {% csrf_token %}
-                {{ form }}
-
+                
                 <div class="input-group" id="input_group">
 
                   <input id="{{ form.studmail.id_for_label }}" class="form-control" name="studmail" type="text"
@@ -105,13 +117,5 @@
 
 {% endblock subscribe %}
 
-{% block content %}
-{% endblock content %}
-
-{% block messages %}
-{% endblock messages %}
-
-{% block reload %}
-{% endblock reload %}
 </body>
 </html>
