@@ -45,9 +45,13 @@
                     }
 
             </script>
+            <br>
+
         </div>
         <div id="chart_div" class="col-lg-8"></div>
     </div>
+     <strong></strong><font  style="font-size: 200%; padding-left: 300px;">...Coffee left ( ͡° ͜ʖ ͡°)</font></strong>
+    <br/><br/>
     <script>
         window.onload = function () {
             $('#home').addClass('active');
@@ -141,11 +145,13 @@
 {% block messages %}
 
     {% if error_msg != "nothing" and error_msg != None %}
+        <br><br>
         <strong><span id="error" style="font-size: large; color: maroon; ">Woops! Something went wrong :/</span></strong>
         <br/>
         <strong><span id="error" style="font-size: medium; color: maroon; ">{{ error_msg }}</span></strong>
 
     {% elif not error_msg %}
+        <br><br>
        <strong> <span id="success"
                       style="font-size: large; color: #006400; ">Congratulations, you have subscribed!</span></strong>
     {% else %}
