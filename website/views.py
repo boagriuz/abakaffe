@@ -1,7 +1,7 @@
 import calendar
 import smtplib
 import time
-
+from django.core.urlresolvers import reverse
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect, HttpResponseRedirect
 
@@ -13,55 +13,53 @@ from .models import Subscribe
 error_msg = None
 username = None
 count = 0
-form = None
 
 def index(request, template="website/index.html"):
-    global error_msg, username, count, form
+
 
     # if POST request
     stat = get_statistics()
     # count GETs
+    global error_msg, username, count
 
     if request.method == 'POST':
         form = NameForm(request.POST)
+
         if form.is_valid():
+
             if form.cleaned_data['studmail'] != '':
+
                 if form.form_contains_letters():
 
                     username = form.cleaned_data['studmail']
                     studmail = form.cleaned_data['studmail'] + "@stud.ntnu.no"
                     created = calendar.timegm(time.gmtime())
+                    # send a notify
                     sendMail(studmail, "")
-
+                    count = 0
+                    error_msg = None
                     # save to database
                     sub_obj = Subscribe(studmail=studmail, created=created)
                     sub_obj.save()
 
-                    # reset GET
-                    count = 0
-                    error_msg = None
-
-
-                    return HttpResponseRedirect("/")
+                    return redirect("/")
 
                 else:
-                    count = 0
                     error_msg = "- Username can only contain letters [a-zA-Z]"
             else:
-                count = 0
+
                 error_msg = "nothing"
         else:
-            count = 0
+
             error_msg = "- Form data is invalid"
 
         # form = NameForm()  # if GET request
     else:    # clear msg if only GET request >=2
         form = NameForm()
 
-
-    count += 1
-    if count >= 2:
-        error_msg = "nothing"
+        count += 1
+        if count >= 2:
+            error_msg = "nothing"
 
 
     context = {
@@ -72,9 +70,9 @@ def index(request, template="website/index.html"):
             'WEIGHT': Weight.objects.get(key=1).weight,
             'STATISTICS': stat,
 
-        }
+    }
 
-    return render(request, "website/index.html", context)  ### see settings for email stuff ###
+    return render(request, "website/index.html", context)
 
 
 def highscore(request, template="website/highscore.html"):
@@ -88,9 +86,10 @@ def about(request, template="website/about.html"):
     return render(request, template)
 
 
+
+### see settings for email stuff ###
 def sendMail(email_receiver, content):
-    # if "to" is not a list of e-mails but a string
-    # it will be converted to a single item list
+
 
     if content:
         subject = "Coffee is ready :)"
@@ -134,6 +133,9 @@ def sendMail(email_receiver, content):
 
 
 def sendTemplate(subject, content, subtype, receiver):
+    #"to" argument must be a list or tuple
+     # if "receiver" is not a list of e-mails but a string
+    # it will be converted to a single item list
     if not isinstance(receiver, list):
         receiver = receiver.strip().split()
 

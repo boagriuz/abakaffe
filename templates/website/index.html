@@ -23,16 +23,25 @@
 
                     var CoffeeAndScale = 4202; //grams
                     var OnlyScale = 2146;
-                    var currentCoffeeAndScale = '{{ WEIGHT }}';
+                    var currentOnlyCoffeeMax = CoffeeAndScale - OnlyScale;
+
+                    var currentCoffeeAndScale = '{{ WEIGHT }}'; //must be more that 2146 grams
 
                     if (currentCoffeeAndScale <= 0) return 0;
                     if (currentCoffeeAndScale >= CoffeeAndScale) return 100;
 
-                    var currentOnlyCoffee = currentCoffeeAndScale - OnlyScale;
-                    var currentMaxCoffee = CoffeeAndScale - OnlyScale;
 
-                    if (maxWeight >= coffeeWeight) {
-                        return ((currentOnlyCoffee / currentMaxCoffee) * 100).toFixed(1);
+                    if(currentCoffeeAndScale > OnlyScale){
+                        var currentOnlyCoffee = currentCoffeeAndScale - OnlyScale;
+                    }else
+                    {
+                        var currentOnlyCoffee = OnlyScale - currentCoffeeAndScale;
+                    }
+
+
+
+                    if (CoffeeAndScale >= currentCoffeeAndScale) {
+                        return ((currentOnlyCoffee / currentOnlyCoffeeMax) * 100).toFixed(1);
                     }
                     else {
                         return 100;
@@ -141,10 +150,9 @@
         <br/>
         <strong><span id="error" style="font-size: medium; color: maroon; ">{{ error_msg }}</span></strong>
 
-    {% elif not error_msg %}
+    {% elif error_msg == None  %}
         <br><br>
-       <strong> <span id="success"
-                      style="font-size: large; color: #006400; ">Congratulations  {{ username }}, you have subscribed!</span></strong>
+       <strong> <span id="success" style="font-size: large; color: #006400; ">Congratulations{% if username %} {{ username}}{% endif %}, you have subscribed!</span></strong>
     {% else %}
          <!-- SHOW NOTHING :z-->
     {% endif %}
