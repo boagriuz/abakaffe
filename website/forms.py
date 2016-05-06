@@ -1,6 +1,6 @@
 from django import forms
 import re
-
+from .models import Subscribe
 
 # the mail subscribe form
 class NameForm(forms.Form):
@@ -9,6 +9,11 @@ class NameForm(forms.Form):
                'class': "form-control", 'name': "studmail", 'type': "text",
                'maxlength': "{{ form.studmail.maxlength }}", 'size': "35",
                'autocomplete': "on"}))
+
+    class Meta:
+        model = Subscribe
+        fields = {'studmail',}
+
 
     def form_contains_letters(self):
 
