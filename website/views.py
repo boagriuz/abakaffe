@@ -1,10 +1,8 @@
 import calendar
 import smtplib
 import time
-from django.core.urlresolvers import reverse
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect, HttpResponseRedirect
-
 from highscores.views import get_monthly_alltime, get_statistics
 from .forms import NameForm
 from update.models import Weight
@@ -12,7 +10,7 @@ from .models import Subscribe
 
 error_msg = "nothing"
 username = None
-count = 0
+
 
 def index(request, template="website/index.html"):
 
@@ -20,7 +18,7 @@ def index(request, template="website/index.html"):
     # if POST request
     stat = get_statistics()
     # count GETs
-    global error_msg, username, count
+    global error_msg, username
 
     if request.method == 'POST':
 
@@ -37,13 +35,12 @@ def index(request, template="website/index.html"):
                     created = calendar.timegm(time.gmtime())
                     # send a notify
                     sendMail(studmail, "")
-                    count = 0
                     error_msg = None
                     # save to database
                     sub_obj = Subscribe(studmail=studmail, created=created)
                     sub_obj.save()
 
-                    return redirect("index")
+
                 else:
                     error_msg = "- Username can only contain letters [a-zA-Z]"
             else:
@@ -54,10 +51,6 @@ def index(request, template="website/index.html"):
         # form = NameForm()  # if GET request
     else:    # clear msg if only GET request >=2
         form = NameForm()
-
-        count += 1
-        if count >= 2:
-            error_msg = "nothing"
 
     context = {
 
