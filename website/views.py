@@ -10,7 +10,7 @@ from .forms import NameForm
 from update.models import Weight
 from .models import Subscribe
 
-error_msg = None
+error_msg = "nothing"
 username = None
 count = 0
 
