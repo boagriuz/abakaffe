@@ -23,8 +23,9 @@ def index(request, template="website/index.html"):
     global error_msg, username, count
 
     if request.method == 'POST':
-        form = NameForm(request.POST)
 
+
+        form = NameForm(request.POST)
         if form.is_valid():
 
             if form.cleaned_data['studmail'] != '':
@@ -42,15 +43,12 @@ def index(request, template="website/index.html"):
                     sub_obj = Subscribe(studmail=studmail, created=created)
                     sub_obj.save()
 
-                    return redirect("/")
-
+                    return redirect("index")
                 else:
                     error_msg = "- Username can only contain letters [a-zA-Z]"
             else:
-
                 error_msg = "nothing"
         else:
-
             error_msg = "- Form data is invalid"
 
         # form = NameForm()  # if GET request
@@ -60,7 +58,6 @@ def index(request, template="website/index.html"):
         count += 1
         if count >= 2:
             error_msg = "nothing"
-
 
     context = {
 
