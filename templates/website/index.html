@@ -141,36 +141,20 @@
         </nav>
     </div>
 
-    <script>
-        setTimeout(clearHackSubscribe, 5000);
-
-        function clearHackSubscribe() {
-
-            if (document.getElementById("subForm").studentmail.value) {
-
-                document.getElementById("subForm").studentmail.value = "";
-                $("#button").click();
-
-            }
-        }
-
-        clearTimeout();
-    </script>
-
 {% endblock subscribe %}
 
 {% block messages %}
 
     {% if error_msg != "nothing" and error_msg != "success" %}
         <br><br>
-        <strong><span id="error" style="font-size: large; color: maroon; ">Woops! Something went wrong :/</span></strong>
+        <strong><font id="error" style="font-size: large; color: maroon; ">Woops! Something went wrong :/</font></strong>
         <br/>
-        <strong><span id="error" style="font-size: medium; color: maroon; ">{{ error_msg }}</span></strong>
+        <strong><font id="error" style="font-size: medium; color: maroon; ">{{ error_msg }}</font></strong>
 
     {% elif error_msg == "success" %}
         <br><br>
-        <strong> <span id="success" style="font-size: large; color: #006400; ">Congratulations{% if username %}
-            {{ username }}{% endif %}, you have subscribed!</span></strong>
+        <strong> <font id="success" style="font-size: large; color: #006400; ">Congratulations{% if username %}
+            {{ username }}{% endif %}, you have subscribed!</font></strong>
 
     {% endif %}
 
