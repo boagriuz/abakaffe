@@ -14,6 +14,7 @@ class NameForm(forms.Form):
         model = Subscribe
         fields = {'studmail',}
 
+
     def form_contains_letters(self):
 
         studmail = self.cleaned_data.get('studmail')
