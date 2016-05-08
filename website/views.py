@@ -8,8 +8,8 @@ from .forms import NameForm
 from update.models import Weight
 from .models import Subscribe
 
-error_msg = "nothing"
 username = None
+error_msg = None
 
 def index(request, template="website/index.html"):
     stat = get_statistics()
@@ -32,11 +32,12 @@ def index(request, template="website/index.html"):
                 else:
                     error_msg = "- Username can only contain letters [a-zA-Z]"
             else:
-                error_msg = "nothing"
+                error_msg = "- Field is empty"
         else:
             error_msg = "- Form data is invalid"
     else:
         form = NameForm()
+
 
     context = {
             'form': form,
@@ -63,9 +64,12 @@ def sendMail(email_receiver, content):
         subtype = "text"
         message = content
         sendTemplate(subject, message, subtype, email_receiver)
+
+
     else:
         subject = "Abakaffe Subcribe :)"
-        html_msg = """\
+        subtype = "html"
+        message = """\
             <html>
             <meta charset="ISO-8859-1">
             <head></head>
@@ -94,7 +98,8 @@ def sendMail(email_receiver, content):
             </html>
         """ % username
 
-        sendTemplate(subject, html_msg, "html", email_receiver)
+        sendTemplate(subject, message, subtype, email_receiver)
+
 
 def sendTemplate(subject, content, subtype, receiver):
     #"to" argument must be a list or tuple
@@ -106,5 +111,6 @@ def sendTemplate(subject, content, subtype, receiver):
         email = EmailMessage(subject, content, "abakaffenotifier@gmail.com", receiver)
         email.content_subtype = subtype
         email.send()
+
     except smtplib.SMTPException as e:
         print("Email ERROR:", e)

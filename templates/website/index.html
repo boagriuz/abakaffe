@@ -139,7 +139,7 @@
     </div>
 
     <script>
-        setTimeout(clearHackSubscribe, 6000);
+        setTimeout(clearHackSubscribe, 10000);
 
         function clearHackSubscribe() {
 
@@ -149,6 +149,7 @@
                 $("#button").click();
 
             }
+
         }
 
         clearTimeout();
@@ -160,19 +161,12 @@
 
 {% block messages %}
 
-    {% if error_msg != "nothing" and error_msg != None %}
-        <br><br>
-        <strong><span id="error"
-                      style="font-size: large; color: maroon; ">Woops! Something went wrong :/</span></strong>
-        <br/>
-        <strong><span id="error" style="font-size: medium; color: maroon; ">{{ error_msg }}</span></strong>
+    {% if error_msg == None %}
 
-    {% elif error_msg == None %}
         <br><br>
         <strong> <span id="success" style="font-size: large; color: #006400; ">Congratulations{% if username %}
             {{ username }}{% endif %}, you have subscribed!</span></strong>
-    {% else %}
-        <!-- SHOW NOTHING :z-->
-    {% endif %}
+
+   {% endif %}
 
 {% endblock messages %}
