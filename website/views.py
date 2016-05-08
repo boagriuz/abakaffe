@@ -9,11 +9,13 @@ from update.models import Weight
 from .models import Subscribe
 
 username = None
-error_msg = None
+
 
 def index(request, template="website/index.html"):
     stat = get_statistics()
-    global error_msg, username
+    global username
+
+    error_msg = None
 
     if request.method == 'POST':
         form = NameForm(request.POST)
@@ -25,7 +27,7 @@ def index(request, template="website/index.html"):
                     created = calendar.timegm(time.gmtime())
                     # send a notify
                     sendMail(studmail, "")
-                    error_msg = None
+                    error_msg = "success"
                     # save to database
                     sub_obj = Subscribe(studmail=studmail, created=created)
                     sub_obj.save()
@@ -38,16 +40,16 @@ def index(request, template="website/index.html"):
     else:
         form = NameForm()
 
-
     context = {
-            'form': form,
-            'username': username,
-            'error_msg': error_msg,
-            'WEIGHT': Weight.objects.get(key=1).weight,
-            'STATISTICS': stat,
+        'form': form,
+        'username': username,
+        'error_msg': error_msg,
+        'WEIGHT': Weight.objects.get(key=1).weight,
+        'STATISTICS': stat,
     }
 
     return render(request, "website/index.html", context)
+
 
 def highscore(request, template="website/highscore.html"):
     monthly, alltime = get_monthly_alltime()
@@ -55,8 +57,11 @@ def highscore(request, template="website/highscore.html"):
     context = {'MONTHLY': monthly, 'ALLTIME': alltime, 'STATISTICS': stat}
     return render(request, template, context)
 
+
 def about(request, template="website/about.html"):
     return render(request, template)
+
+
 ### see settings for email stuff ###
 def sendMail(email_receiver, content):
     if content:
@@ -102,8 +107,8 @@ def sendMail(email_receiver, content):
 
 
 def sendTemplate(subject, content, subtype, receiver):
-    #"to" argument must be a list or tuple
-     # if "receiver" is not a list of e-mails but a string
+    # "to" argument must be a list or tuple
+    # if "receiver" is not a list of e-mails but a string
     # it will be converted to a single item list
     if not isinstance(receiver, list):
         receiver = receiver.strip().split()
