@@ -66,6 +66,8 @@
         $(this).parent().addClass('active');
     });
 
+    // disable F5 key
+    $(document).bind("keydown", disableF5);
 </script>
 
 <div class="wide">
