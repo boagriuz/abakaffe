@@ -37,8 +37,6 @@ def index(request, template="website/index.html"):
                     sub_obj = Subscribe(studmail=studmail, created=created)
                     sub_obj.save()
 
-                    
-
                 else:
                     error_msg = "- Username can only contain letters [a-zA-Z]"
             else:
