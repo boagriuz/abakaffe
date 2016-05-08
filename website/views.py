@@ -25,7 +25,7 @@ def index(request, template="website/index.html"):
                     created = calendar.timegm(time.gmtime())
                     # send a notify
                     sendMail(studmail, "")
-                    error_msg = None
+                    error_msg = "success"
                     # save to database
                     sub_obj = Subscribe(studmail=studmail, created=created)
                     sub_obj.save()
@@ -57,12 +57,15 @@ def highscore(request, template="website/highscore.html"):
 
 def about(request, template="website/about.html"):
     return render(request, template)
+
+
 ### see settings for email stuff ###
 def sendMail(email_receiver, content):
     if content:
         subject = "Coffee is ready :)"
         subtype = "text"
         message = content
+
         sendTemplate(subject, message, subtype, email_receiver)
     else:
         subject = "Abakaffe Subcribe :)"

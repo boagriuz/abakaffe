@@ -33,7 +33,9 @@
 
                     if (currentCoffeeAndScale > OnlyScale) {
                         var currentOnlyCoffee = currentCoffeeAndScale - OnlyScale;
-                    } else {
+                    }
+                    else
+                    {
                         var currentOnlyCoffee = OnlyScale - currentCoffeeAndScale;
                     }
 
@@ -41,7 +43,8 @@
                     if (CoffeeAndScale >= currentCoffeeAndScale) {
                         return ((currentOnlyCoffee / currentOnlyCoffeeMax) * 100).toFixed(1);
                     }
-                    else {
+                    else
+                    {
                         return 100;
                     }
 
@@ -152,22 +155,19 @@
         }
 
         clearTimeout();
-
-
     </script>
 
 {% endblock subscribe %}
 
 {% block messages %}
 
-    {% if error_msg != "nothing" and error_msg != None %}
+    {% if error_msg != "nothing" and error_msg != "success" %}
         <br><br>
-        <strong><span id="error"
-                      style="font-size: large; color: maroon; ">Woops! Something went wrong :/</span></strong>
+        <strong><span id="error" style="font-size: large; color: maroon; ">Woops! Something went wrong :/</span></strong>
         <br/>
         <strong><span id="error" style="font-size: medium; color: maroon; ">{{ error_msg }}</span></strong>
 
-    {% elif error_msg == None %}
+    {% elif error_msg == "success" %}
         <br><br>
         <strong> <span id="success" style="font-size: large; color: #006400; ">Congratulations{% if username %}
             {{ username }}{% endif %}, you have subscribed!</span></strong>
