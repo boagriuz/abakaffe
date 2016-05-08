@@ -15,7 +15,7 @@ username = None
 def index(request, template="website/index.html"):
     stat = get_statistics()
     global error_msg, username
-    error_msg = None
+    error_msg = "nothing"
 
     if request.method == 'POST':
         form = NameForm(request.POST)
@@ -119,4 +119,3 @@ def sendMail(email_receiver, content):
 
     except smtplib.SMTPException as e:
         print("Email ERROR:", e)
-
