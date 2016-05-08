@@ -31,13 +31,14 @@
                     if (currentCoffeeAndScale >= CoffeeAndScale) return 100;
 
 
-                    if (currentCoffeeAndScale > OnlyScale) {
+                    if(currentCoffeeAndScale > OnlyScale){
                         var currentOnlyCoffee = currentCoffeeAndScale - OnlyScale;
                     }
                     else
                     {
                         var currentOnlyCoffee = OnlyScale - currentCoffeeAndScale;
                     }
+
 
 
                     if (CoffeeAndScale >= currentCoffeeAndScale) {
@@ -54,7 +55,7 @@
         </div>
         <div id="chart_div" class="col-lg-8"></div>
     </div>
-    <strong></strong><font style="font-size: 150%; padding-left: 260px;">...Coffee left ( ͡° ͜ʖ ͡°)</font></strong>
+      <strong></strong><font  style="font-size: 150%; padding-left: 260px;">...Coffee left ( ͡° ͜ʖ ͡°)</font></strong>
     <br/><br/>
     <script>
         window.onload = function () {
@@ -127,19 +128,33 @@
         <nav class="navbar navbar-default">
             <p class="navbar-text">Get notified when the coffee is ready</p>
             ​
-            <form class="navbar-form navbar-left" action="/" method="post" id="subForm">
+            <form class="navbar-form navbar-left" id="subForm" action="/" method="post">
                 {% csrf_token %}
 
                 <div class="input-group" id="input_group">
-                    {{ form }} <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
+                   {{ form }} <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
                 </div>
 
-                <input type="submit" value="Subscribe" id="button" class="btn btn-default navbar-btn"/>
+                <input type="submit" id="button" value="Subscribe" class="btn btn-default navbar-btn"/>
             </form>
             ​
 
         </nav>
     </div>
+
+
+    <script>
+        setTimeout(clearHackSubscribe, 10000);
+
+        function clearHackSubscribe() {
+
+                document.getElementById("subForm").studentmail.value = "";
+                $("#button").click();
+
+           }
+
+        clearTimeout();
+    </script>
 
 {% endblock subscribe %}
 
@@ -150,12 +165,10 @@
         <strong><font id="error" style="font-size: large; color: maroon; ">Woops! Something went wrong :/</font></strong>
         <br/>
         <strong><font id="error" style="font-size: medium; color: maroon; ">{{ error_msg }}</font></strong>
-
     {% elif error_msg == "success" %}
         <br><br>
         <strong> <font id="success" style="font-size: large; color: #006400; ">Congratulations{% if username %}
             {{ username }}{% endif %}, you have subscribed!</font></strong>
-
     {% endif %}
 
 {% endblock messages %}
