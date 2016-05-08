@@ -8,14 +8,12 @@ from .forms import NameForm
 from update.models import Weight
 from .models import Subscribe
 
+error_msg = "nothing"
 username = None
-
 
 def index(request, template="website/index.html"):
     stat = get_statistics()
-    global username
-
-    error_msg = None
+    global error_msg, username
 
     if request.method == 'POST':
         form = NameForm(request.POST)
@@ -27,29 +25,29 @@ def index(request, template="website/index.html"):
                     created = calendar.timegm(time.gmtime())
                     # send a notify
                     sendMail(studmail, "")
-                    error_msg = "success"
+                    error_msg = None
                     # save to database
                     sub_obj = Subscribe(studmail=studmail, created=created)
                     sub_obj.save()
                 else:
                     error_msg = "- Username can only contain letters [a-zA-Z]"
             else:
-                error_msg = "- Field is empty"
+                error_msg = "nothing"
         else:
             error_msg = "- Form data is invalid"
     else:
         form = NameForm()
+        error_msg = "nothing"
 
     context = {
-        'form': form,
-        'username': username,
-        'error_msg': error_msg,
-        'WEIGHT': Weight.objects.get(key=1).weight,
-        'STATISTICS': stat,
+            'form': form,
+            'username': username,
+            'error_msg': error_msg,
+            'WEIGHT': Weight.objects.get(key=1).weight,
+            'STATISTICS': stat,
     }
 
     return render(request, "website/index.html", context)
-
 
 def highscore(request, template="website/highscore.html"):
     monthly, alltime = get_monthly_alltime()
@@ -57,11 +55,8 @@ def highscore(request, template="website/highscore.html"):
     context = {'MONTHLY': monthly, 'ALLTIME': alltime, 'STATISTICS': stat}
     return render(request, template, context)
 
-
 def about(request, template="website/about.html"):
     return render(request, template)
-
-
 ### see settings for email stuff ###
 def sendMail(email_receiver, content):
     if content:
@@ -69,8 +64,6 @@ def sendMail(email_receiver, content):
         subtype = "text"
         message = content
         sendTemplate(subject, message, subtype, email_receiver)
-
-
     else:
         subject = "Abakaffe Subcribe :)"
         subtype = "html"
@@ -107,8 +100,8 @@ def sendMail(email_receiver, content):
 
 
 def sendTemplate(subject, content, subtype, receiver):
-    # "to" argument must be a list or tuple
-    # if "receiver" is not a list of e-mails but a string
+    #"to" argument must be a list or tuple
+     # if "receiver" is not a list of e-mails but a string
     # it will be converted to a single item list
     if not isinstance(receiver, list):
         receiver = receiver.strip().split()
