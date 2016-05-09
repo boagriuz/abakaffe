@@ -1,7 +1,9 @@
 import calendar
 import time
+from django.core.urlresolvers import reverse
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect, HttpResponseRedirect
+
 from highscores.views import get_monthly_alltime, get_statistics
 from .forms import NameForm
 from update.models import Weight
@@ -14,6 +16,7 @@ username = None
 
 def index(request, template="website/index.html"):
     stat = get_statistics()
+
     global error_msg, username
     error_msg = "nothing"
 
@@ -26,15 +29,13 @@ def index(request, template="website/index.html"):
                     username = form.cleaned_data['studmail']
                     studmail = form.cleaned_data['studmail'] + "@stud.ntnu.no"
                     created = calendar.timegm(time.gmtime())
-
-                    sub_obj = Subscribe(studmail=studmail, created=created)
-                    sub_obj.save()
-
                     # send a notify
                     sendMail(studmail, "")
-
+                   
                     error_msg = "success"
                     # save to database
+                    sub_obj = Subscribe(studmail=studmail, created=created)
+                    sub_obj.save()
 
                 else:
                     error_msg = "- Username can only contain letters [a-zA-Z]"
@@ -92,17 +93,15 @@ def sendMail(email_receiver, content):
             <p>Peace and Love, <br> </p>
             <br>
             <pre>
-
-              ,,                                        ,...  ,...
-      db     *MM                 `7MM                 .d' "".d' ""
-     ;MM:     MM                   MM                 dM`   dM`
-    ,V^MM.    MM,dMMb.   ,6"Yb.    MM  ,MP' ,6"Yb.   mMMmm mMMmm.gP"Ya
-   ,M  `MM    MM    `Mb 8)   MM    MM ;Y   8)   MM    MM    MM ,M'   Yb
-   AbmmmqMA   MM     M8  ,pm9MM    MM;Mm    ,pm9MM    MM    MM 8M******
-  A'     VML  MM.   ,M9 8M   MM    MM `Mb. 8M   MM    MM    MM YM.    ,
-.AMA.   .AMMA.P^YbmdP'  `Moo9^Yo..JMML. YA.`Moo9^Yo..JMML..JMML.`Mbmmd'
-
+           __
+          /  ) /       /        /) /)
+         /--/ /____.  /_  __.  // // _
+        /  (_/_)(_/|_/ <_(_/|_//_//_(/_
+                             /> />
+                          </ </
+	<br>
             </pre>
+
             </body>
             </html>
         """ % username
