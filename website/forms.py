@@ -5,10 +5,10 @@ from .models import Subscribe
 # the mail subscribe form
 class NameForm(forms.Form):
     studmail = forms.CharField(max_length=20, label='', required=False, widget=forms.TextInput(
-        attrs={'placeholder': 'NTNU-username', 'id': "studentmail",
+        attrs={'placeholder': 'NTNU-username', 'id': "{{ form.studmail.id_for_label }}",
                'class': "form-control", 'name': "studmail", 'type': "text",
-               'maxlength': "{{ form.studmail.maxlength }}", 'size': "35",
-              }))
+               'maxlength': "{{ form.studmail.maxlength }}", 'size': "35",'autocomplete':'off',
+               }))
 
     class Meta:
         model = Subscribe
