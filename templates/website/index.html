@@ -30,16 +30,16 @@
                     if (currentCoffeeAndScale <= 0) return 0;
                     if (currentCoffeeAndScale >= CoffeeAndScale) return 100;
 
-
+                    var currentOnlyCoffee = -1;
                     if (currentCoffeeAndScale > OnlyScale) {
-                        var currentOnlyCoffee = currentCoffeeAndScale - OnlyScale;
+                        currentOnlyCoffee = currentCoffeeAndScale - OnlyScale;
                     }
                     else {
-                        var currentOnlyCoffee = OnlyScale - currentCoffeeAndScale;
+                        currentOnlyCoffee = 0;
                     }
 
 
-                    if (CoffeeAndScale >= currentCoffeeAndScale) {
+                    if (CoffeeAndScale >= currentCoffeeAndScale && currentOnlyCoffeeMax >= currentOnlyCoffee) {
                         return ((currentOnlyCoffee / currentOnlyCoffeeMax) * 100).toFixed(1);
                     }
                     else {
@@ -52,39 +52,24 @@
         </div>
         <div id="chart_div" class="col-lg-8"></div>
     </div>
-    <strong></strong><font style="font-size: 150%; padding-left: 260px;">...Coffee left ( ͡° ͜ʖ ͡°)</font></strong>
+    <strong><font style="font-size: 150%; padding-left: 260px;">...Coffee left ( ͡° ͜ʖ ͡°)</font> </strong>
     <br/><br/>
-
     <script>
         window.onload = function () {
             $('#home').addClass('active');
         };
+    </script>
+    <script>
 
-
-        // disable F5 key
-        document.onkeydown = function () {
-            switch (event.keyCode) {
-                case 116 : //F5 button
-                    event.returnValue = false;
-                    event.keyCode = 0;
-                    return false;
-                case 82 : //R button
-                    if (event.ctrlKey) {
-                        event.returnValue = false;
-                        event.keyCode = 0;
-                        return false;
-                    }
-            }
-        };
-
-        //reload every 1 minute unless resetTimeout() is called.
-        var timeout = setTimeout("location.reload(true);", 60000);
+        var timeout = setTimeout("location.reload(true);", 60000); //reload every 1 minute unless resetTimeout() is called.
         function resetTimeout() {
             clearTimeout(timeout);
             timeout = setTimeout("location.reload(true);", 60000);
         }
 
-        //////////////////////////////////////////////////////////////////
+    </script>
+
+    <script>
         google.charts.load("current", {packages: ['corechart']});
         google.charts.setOnLoadCallback(drawChart);
         function drawChart() {
@@ -122,7 +107,7 @@
                 width: 1000,
                 height: 400,
                 bar: {groupWidth: "95%"},
-                legend: {position: "none"},
+                legend: {position: "none"}
             };
             var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
 
@@ -147,7 +132,7 @@
                     {{ form }} <span class="input-group-addon" id="basic-addon2">@stud.ntnu.no</span>
                 </div>
 
-                <input type="submit" value="Subscribe" id="button" class="btn btn-default navbar-btn"/>
+                <input type="submit" value="Subscribe" class="btn btn-default navbar-btn" id="button"/>
             </form>
             ​
 
@@ -155,19 +140,32 @@
     </div>
 
     <script>
+
+
         setTimeout(clearHackSubscribe, 5000);
 
         function clearHackSubscribe() {
 
-            if (document.getElementById("subForm").studentmail.value) {
-
-                document.getElementById("subForm").studentmail.value = "";
+            if (document.getElementById("subForm").studmail.value) {
+                document.getElementById("subForm").studmail.value = "";
                 $("#button").click();
 
             }
         }
 
         clearTimeout();
+
+
+        //disable F5 Key
+        document.onkeydown = function () {
+            switch (event.keyCode) {
+                case 116 : //F5 button
+                    event.returnValue = false;
+                    event.keyCode = 0;
+                    return false;
+
+            }
+        }
     </script>
 
 {% endblock subscribe %}
@@ -175,7 +173,6 @@
 {% block messages %}
 
     {% if error_msg != "nothing" and error_msg != "success" %}
-
         <br><br>
         <strong><span id="error"
                       style="font-size: large; color: maroon; ">Woops! Something went wrong :/</span></strong>
@@ -183,7 +180,6 @@
         <strong><span id="error" style="font-size: medium; color: maroon; ">{{ error_msg }}</span></strong>
 
     {% elif error_msg == "success" %}
-
         <br><br>
         <strong> <span id="success" style="font-size: large; color: #006400; ">Congratulations{% if username %}
             {{ username }}{% endif %}, you have subscribed!</span></strong>
