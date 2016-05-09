@@ -8,3 +8,5 @@ website/__pycache__/
 abakaffe/settings.py
 db.sqlite3
 secret.py
+abakaffe_subscribe_timer.py
+
